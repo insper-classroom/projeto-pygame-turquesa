@@ -24,7 +24,6 @@ class Desenha_fundo:
             pygame.Rect(290, 482, 127, 6),
             pygame.Rect(287, 482, 7, 65),
             pygame.Rect(250, 547, 45, 6),
-
         ]
 
     def desenha_mapa(self, window):
@@ -32,38 +31,3 @@ class Desenha_fundo:
         for parede in self.lista_paredes:
             pygame.draw.rect(window,PRETO, parede)
         
-
-
-class Jogo:
-    def __init__(self):
-        pygame.init()
-        pygame.display.set_caption('pokemon-gym')
-
-        self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
-        self.personagem = pygame.transform.scale((pygame.image.load('img/personagem.png')),(30, 30))
-
-        self.rodando_jogo = True
-        self.tela_gym = True
-        self.treinador_1 = False
-        self.treinador_2 = False
-        self.treinador_3 = False
-        self.treinador_4 = False
-
-    def iniciar_jogo(self):
-        tela_gym = Desenha_fundo()
-
-        while self.rodando_jogo:
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.rodando_jogo = False
-
-
-            if self.tela_gym:
-                tela_gym.desenha_mapa(self.window_gym)
-                
-
-            pygame.display.update()
-
-game = Jogo()
-game.iniciar_jogo()
