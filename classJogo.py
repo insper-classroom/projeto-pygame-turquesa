@@ -2,6 +2,7 @@ import pygame
 from constantes import *
 from classGym import *
 from classPersonagem import *
+from classTreinadores import *
 
 class Jogo:
     def __init__(self):
@@ -21,13 +22,14 @@ class Jogo:
     def iniciar_jogo(self):
         tela_gym = Desenha_fundo()
         personagem = Personagem()
+        treinador1 = Treinador1()
 
         while self.rodando_jogo:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.rodando_jogo = False
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
                         personagem.velocidade[1] += -2
                 elif event.type == pygame.KEYUP and event.key == pygame.K_w:
                         personagem.velocidade[1] += 2
@@ -50,13 +52,21 @@ class Jogo:
             else:
                 personagem.rect.x = personagem.pos_antiga[0] 
                 personagem.rect.y = personagem.pos_antiga[1] 
+            
+            if treinador1.rect.colliderect(personagem.rect):
+                self.tela_gym_jogo = False
+                self.treinador_1 = True
 
             if self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
+                treinador1.deseja_treinador1(self.window_gym)
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
                 personagem.desenha_personagem(self.window_gym)
-                
+            elif self.treinador_1:
+                self.window_gym.fill(PRETO)
+                pygame.display.update()
+
 
             pygame.display.update()
 
