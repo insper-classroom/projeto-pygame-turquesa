@@ -30,4 +30,3 @@ class Desenha_fundo:
         window.blit(self.fundo, (0, 0))
         for parede in self.lista_paredes:
             pygame.draw.rect(window,PRETO, parede)
-        

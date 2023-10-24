@@ -28,9 +28,9 @@ class Jogo:
                 if event.type == pygame.QUIT:
                     self.rodando_jogo = False
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                    personagem.velocidade[1] += -1
+                        personagem.velocidade[1] += -1
                 elif event.type == pygame.KEYUP and event.key == pygame.K_w:
-                    personagem.velocidade[1] += 1
+                        personagem.velocidade[1] += 1
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     personagem.velocidade[1] += 1
                 elif event.type == pygame.KEYUP and event.key == pygame.K_s:
@@ -43,6 +43,13 @@ class Jogo:
                     personagem.velocidade[0] += 1
                 elif event.type == pygame.KEYUP and event.key == pygame.K_d:
                     personagem.velocidade[0] += -1
+            
+
+            if not personagem.verifica_colisao(tela_gym.lista_paredes):
+                personagem.pos_antiga = [personagem.rect.x, personagem.rect.y]
+            else:
+                personagem.rect.x = personagem.pos_antiga[0] 
+                personagem.rect.y = personagem.pos_antiga[1] 
 
             if self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
