@@ -10,21 +10,33 @@ class Jogo:
         pygame.init()
         pygame.display.set_caption('pokemon-gym')
 
+        #TELAS
         self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt1 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
-        self.personagem = pygame.transform.scale((pygame.image.load('img/personagem.png')),(30, 30))
+        self.windowt2 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        self.windowt3 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
 
+        #INFOS TELA GYM
         self.rodando_jogo = True
         self.tela_gym_jogo = True
+        #INFOS TELA BATALHA1:
         self.treinador_1 = False
+        self.bol_batalha1 = False
+        #INFOS TELA BATALHA2:
         self.treinador_2 = False
+        #INFOS TELA BATALHA3:
         self.treinador_3 = False
+        #INFOS TELA BATALHA4:
         self.treinador_4 = False
 
     def iniciar_jogo(self):
         tela_gym = Desenha_fundo()
         personagem = Personagem()
         treinador1 = Treinador1()
+        treinador2 = Treinador2()
+        treinador3 = Treinardor3()
+        treinador4 = Treinador4()
         batalha = Batalha()
 
         while self.rodando_jogo:
@@ -56,6 +68,10 @@ class Jogo:
                     batalha.tela_atual = 'batalha'
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
                     batalha.tela_atual = 'escolhendo'
+                #TESTE
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    self.treinador_1 = False
+                    self.tela_gym_jogo = True
             
             if not personagem.verifica_colisao(tela_gym.lista_paredes):
                 personagem.pos_antiga = [personagem.rect.x, personagem.rect.y]
@@ -63,18 +79,37 @@ class Jogo:
                 personagem.rect.x = personagem.pos_antiga[0] 
                 personagem.rect.y = personagem.pos_antiga[1] 
             
-            if treinador1.rect.colliderect(personagem.rect):
+            if treinador1.rect.colliderect(personagem.rect) and not self.bol_batalha1:
                 self.tela_gym_jogo = False
                 self.treinador_1 = True
+                self.bol_batalha1 = True #teste para sair da batalha
+            if treinador2.rect.colliderect(personagem.rect):
+                self.tela_gym_jogo = False
+                self.treinador_2 = True
+            if treinador3.rect.colliderect(personagem.rect):
+                self.tela_gym_jogo = False
+                self.treinador_3 = True
+            if treinador4.rect.colliderect(personagem.rect):
+                self.tela_gym_jogo = False
+                self.treinador_4 = True
 
             if self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
-                treinador1.deseja_treinador1(self.window_gym)
+                treinador1.desenha_treinador1(self.window_gym)
+                treinador2.desenha_treinador2(self.window_gym)
+                treinador3.desenha_treinador3(self.window_gym)
+                treinador4.desenha_treinador4(self.window_gym)
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
                 personagem.desenha_personagem(self.window_gym)
             elif self.treinador_1:
                 batalha.desenha_batalha(self.windowt1)
+            elif self.treinador_2:
+                batalha.desenha_batalha(self.windowt2)
+            elif self.treinador_3:
+                batalha.desenha_batalha(self.windowt3)
+            elif self.treinador_4:
+                batalha.desenha_batalha(self.windowt4)
 
             pygame.display.update()
 
