@@ -66,6 +66,6 @@ class Desenha_fundo:
         ]
 
     def desenha_mapa(self, window):
-        window.blit(self.fundo, (0, 0))
         for parede in self.lista_paredes:
             pygame.draw.rect(window,PRETO, parede)
+        window.blit(self.fundo, (0, 0))
