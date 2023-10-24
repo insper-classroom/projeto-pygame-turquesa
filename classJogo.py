@@ -3,6 +3,7 @@ from constantes import *
 from classGym import *
 from classPersonagem import *
 from classTreinadores import *
+from classBatalhas import *
 
 class Jogo:
     def __init__(self):
@@ -10,6 +11,7 @@ class Jogo:
         pygame.display.set_caption('pokemon-gym')
 
         self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        self.windowt1 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.personagem = pygame.transform.scale((pygame.image.load('img/personagem.png')),(30, 30))
 
         self.rodando_jogo = True
@@ -23,6 +25,7 @@ class Jogo:
         tela_gym = Desenha_fundo()
         personagem = Personagem()
         treinador1 = Treinador1()
+        batalha = Batalha()
 
         while self.rodando_jogo:
 
@@ -45,8 +48,15 @@ class Jogo:
                     personagem.velocidade[0] += 2
                 elif event.type == pygame.KEYUP and event.key == pygame.K_d:
                     personagem.velocidade[0] += -2
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                    batalha.botao = 1
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                    batalha.botao = 2
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 1:
+                    batalha.tela_atual = 'batalha'
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
+                    batalha.tela_atual = 'escolhendo'
             
-
             if not personagem.verifica_colisao(tela_gym.lista_paredes):
                 personagem.pos_antiga = [personagem.rect.x, personagem.rect.y]
             else:
@@ -64,9 +74,7 @@ class Jogo:
                 personagem.altera_sprite_horizontal()
                 personagem.desenha_personagem(self.window_gym)
             elif self.treinador_1:
-                self.window_gym.fill(PRETO)
-                pygame.display.update()
-
+                batalha.desenha_batalha(self.windowt1)
 
             pygame.display.update()
 
