@@ -7,6 +7,7 @@ from classBatalhas import *
 from classDesenhailha import *
 from classPersonagemIlha import *
 from classDesenhaCura import *
+from classPersonagemPc import *
 
 class Jogo:
     def __init__(self):
@@ -16,6 +17,7 @@ class Jogo:
         #TELAS
         self.window_ilha = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        self.window_pc = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt1 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt2 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt3 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
@@ -25,6 +27,7 @@ class Jogo:
         self.rodando_jogo = True
         self.tela_ilha = True
         #tela centro pokemon:
+        self.tela_pc = False
         #INFOS TELA GYM:
         self.tela_gym_jogo = False
         #INFOS TELA BATALHA1:
@@ -58,6 +61,7 @@ class Jogo:
 
         batalha = Batalha()
         desenha_cura = Cura_pokemon()
+        personagem_pc = Personagem_pc()
 
         while self.rodando_jogo:
 
@@ -67,34 +71,42 @@ class Jogo:
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
                     personagem.velocidade[1] += -2
                     personagem_ilha.velocidade[1] += -2
+                    personagem_pc.velocidade[1] += -2
 
                 elif event.type == pygame.KEYUP and event.key == pygame.K_w:
                     personagem.velocidade[1] += 2
                     personagem_ilha.velocidade[1] += 2
+                    personagem_pc.velocidade[1] += 2
 
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     personagem.velocidade[1] += 2
                     personagem_ilha.velocidade[1] += 2
+                    personagem_pc.velocidade[1] += 2
 
                 elif event.type == pygame.KEYUP and event.key == pygame.K_s:
                     personagem.velocidade[1] += -2
                     personagem_ilha.velocidade[1] += -2
+                    personagem_pc.velocidade[1] += -2
 
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                     personagem.velocidade[0] += -2
                     personagem_ilha.velocidade[0] += -2
+                    personagem_pc.velocidade[0] += -2
 
                 elif event.type == pygame.KEYUP and event.key == pygame.K_a:
                     personagem.velocidade[0] += 2
                     personagem_ilha.velocidade[0] += 2
+                    personagem_pc.velocidade[0] += 2
 
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
                     personagem.velocidade[0] += 2
                     personagem_ilha.velocidade[0] += 2
+                    personagem_pc.velocidade[0] += 2
 
                 elif event.type == pygame.KEYUP and event.key == pygame.K_d:
                     personagem.velocidade[0] += -2
                     personagem_ilha.velocidade[0] += -2
+                    personagem_pc.velocidade[0] += -2
                 #Arrumar para nao mudar todas as telas
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT and batalha.tela_atual == 'escolhendo':
                     batalha.botao = 1
@@ -133,10 +145,14 @@ class Jogo:
             else:
                 personagem_ilha.rect.x = personagem_ilha.pos_antiga[0] 
                 personagem_ilha.rect.y = personagem_ilha.pos_antiga[1]
-            #altera tela ilha para tela gym:
-            # if personagem_ilha.rect.colliderect(tela_ilha.porta_pc) and self.tela_ilha:
-            #     desenha_cura.desenha_box(self.window_ilha)
-            #     print('teste')
+            #verifica colisao no pc:
+            if not personagem_pc.verifica_colisao(desenha_cura.lista_paredes):
+                personagem_pc.pos_antiga = [personagem_pc.rect.x, personagem_pc.rect.y]
+            else:
+                personagem_pc.rect.x = personagem_pc.pos_antiga[0] 
+                personagem_pc.rect.y = personagem_pc.pos_antiga[1]
+
+            #verifica colisao com a porta ilha p gym:
             if personagem_ilha.rect.colliderect(tela_ilha.porta_gym) and self.tela_ilha:
                 self.tela_ilha = False
                 self.tela_gym_jogo = True
@@ -147,6 +163,18 @@ class Jogo:
                 self.tela_ilha = True
                 personagem_ilha.rect.x = 205 
                 personagem_ilha.rect.y = 523
+
+            #verifica colisao com a porta ilha p pc:
+            if personagem_ilha.rect.colliderect(tela_ilha.porta_pc) and self.tela_ilha:
+                self.tela_ilha = False
+                self.tela_pc = True
+                personagem_pc.rect.x = 305
+                personagem_pc.rect.y = 410
+            elif personagem_pc.rect.colliderect(desenha_cura.porta_pc) and self.tela_pc:
+                self.tela_pc = False
+                self.tela_ilha = True
+                personagem_ilha.rect.x = 63
+                personagem_ilha.rect.y = 326
 
             #altera telas de batalha:
             if treinador1.rect.colliderect(personagem.rect) and not self.bol_batalha1:
@@ -170,15 +198,24 @@ class Jogo:
                 personagem_ilha.altera_sprite_vertical()
                 personagem_ilha.altera_sprite_horizontal()
 
+            elif self.tela_pc:
+                desenha_cura.desenha_pc(self.window_pc)
+                personagem_pc.desenha_personagem(self.window_pc)
+                personagem_pc.altera_sprite_vertical()
+                personagem_pc.altera_sprite_horizontal()
+                # print(pygame.mouse.get_pos())
+                if personagem_pc.rect.colliderect(desenha_cura.balcao):
+                    desenha_cura.desenha_box(self.window_pc)
+
             elif self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
                 treinador1.desenha_treinador1(self.window_gym)
                 treinador2.desenha_treinador2(self.window_gym)
                 treinador3.desenha_treinador3(self.window_gym)
                 treinador4.desenha_treinador4(self.window_gym)
+                personagem.desenha_personagem(self.window_gym)
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
-                personagem.desenha_personagem(self.window_gym)
 
             elif self.treinador_1:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
