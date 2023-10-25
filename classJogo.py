@@ -107,6 +107,14 @@ class Jogo:
                     personagem.velocidade[0] += -2
                     personagem_ilha.velocidade[0] += -2
                     personagem_pc.velocidade[0] += -2
+                #Verifica click do mouse
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        print('sim')
+                    elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        personagem_pc.rect.x = 305
+                        personagem_pc.rect.y = 410
+
                 #Arrumar para nao mudar todas as telas
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT and batalha.tela_atual == 'escolhendo':
                     batalha.botao = 1
@@ -132,7 +140,6 @@ class Jogo:
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     self.treinador_1 = False
                     self.tela_gym_jogo = True
-
             #verifica colisao no ginasio
             if not personagem.verifica_colisao(tela_gym.lista_paredes):
                 personagem.pos_antiga = [personagem.rect.x, personagem.rect.y]
