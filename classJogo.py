@@ -43,10 +43,19 @@ class Jogo:
         personagem_ilha = Personagem_ilha()
         tela_gym = Desenha_fundo()
         personagem = Personagem()
+        #STATS TREINADOR1
         treinador1 = Treinador1()
+        dicionario1 = treinador1.pokemons_treinador1()
+        #STATS TREINADOR2
         treinador2 = Treinador2()
+        dicionario2 = treinador2.pokemons_treinador2()
+        #STATS TREINADOR3
         treinador3 = Treinardor3()
+        dicionario3 = treinador3.pokemons_treinador3()
+        #STATS TREINADOR4
         treinador4 = Treinador4()
+        dicionario4 = treinador4.pokemons_treinador4()
+
         batalha = Batalha()
         desenha_cura = Cura_pokemon()
 
@@ -87,14 +96,26 @@ class Jogo:
                     personagem.velocidade[0] += -2
                     personagem_ilha.velocidade[0] += -2
                 #Arrumar para nao mudar todas as telas
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT and batalha.tela_atual == 'escolhendo':
                     batalha.botao = 1
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT and batalha.tela_atual == 'escolhendo':
                     batalha.botao = 2
+                if event.type == pygame.KEYDOWN and batalha.tela_atual =='batalha':
+                    if self.treinador_1:
+                        batalha.botoes_batalha(event, dicionario1, self.windowt1)
+                    elif self.treinador_2:
+                        batalha.botoes_batalha(event, dicionario2, self.windowt2)
+                    elif self.treinador_3:
+                        batalha.botoes_batalha(event, dicionario3, self.windowt3)
+                    elif self.treinador_4:
+                        batalha.botoes_batalha(event, dicionario4, self.windowt4)
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 1:
                     batalha.tela_atual = 'batalha'
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
+                    batalha.botao = 1
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
                     batalha.tela_atual = 'escolhendo'
+                    batalha. botao = 1
+
                 #TESTE
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     self.treinador_1 = False
@@ -160,13 +181,14 @@ class Jogo:
                 personagem.desenha_personagem(self.window_gym)
 
             elif self.treinador_1:
-                batalha.desenha_batalha(self.windowt1)
+                batalha.desenha_batalha(self.windowt1,dicionario1)
             elif self.treinador_2:
-                batalha.desenha_batalha(self.windowt2)
+                batalha.desenha_batalha(self.windowt2, dicionario2)
             elif self.treinador_3:
-                batalha.desenha_batalha(self.windowt3)
+                batalha.desenha_batalha(self.windowt3, dicionario3)
             elif self.treinador_4:
-                batalha.desenha_batalha(self.windowt4)
+                batalha.desenha_batalha(self.windowt4, dicionario4)
+
 
             pygame.display.update()
 
