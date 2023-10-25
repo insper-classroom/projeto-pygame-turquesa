@@ -32,4 +32,3 @@ class Personagem:
                 break
 
         return is_hit
-    

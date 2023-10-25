@@ -6,6 +6,7 @@ from classTreinadores import *
 from classBatalhas import *
 from classDesenhailha import *
 from classPersonagemIlha import *
+from classDesenhaCura import *
 
 class Jogo:
     def __init__(self):
@@ -23,6 +24,7 @@ class Jogo:
         #INFOS TELA ILHA:
         self.rodando_jogo = True
         self.tela_ilha = True
+        #tela centro pokemon:
         #INFOS TELA GYM:
         self.tela_gym_jogo = False
         #INFOS TELA BATALHA1:
@@ -35,6 +37,7 @@ class Jogo:
         #INFOS TELA BATALHA4:
         self.treinador_4 = False
 
+
     def iniciar_jogo(self):
         tela_ilha = Desenha_ilha()
         personagem_ilha = Personagem_ilha()
@@ -45,7 +48,7 @@ class Jogo:
         treinador3 = Treinardor3()
         treinador4 = Treinador4()
         batalha = Batalha()
-        
+        desenha_cura = Cura_pokemon()
 
         while self.rodando_jogo:
 
@@ -110,6 +113,9 @@ class Jogo:
                 personagem_ilha.rect.x = personagem_ilha.pos_antiga[0] 
                 personagem_ilha.rect.y = personagem_ilha.pos_antiga[1]
             #altera tela ilha para tela gym:
+            # if personagem_ilha.rect.colliderect(tela_ilha.porta_pc) and self.tela_ilha:
+            #     desenha_cura.desenha_box(self.window_ilha)
+            #     print('teste')
             if personagem_ilha.rect.colliderect(tela_ilha.porta_gym) and self.tela_ilha:
                 self.tela_ilha = False
                 self.tela_gym_jogo = True
