@@ -103,7 +103,12 @@ class Jogo:
             else:
                 personagem.rect.x = personagem.pos_antiga[0] 
                 personagem.rect.y = personagem.pos_antiga[1] 
-            
+            #verifica colisao na ilha:
+            if not personagem_ilha.verifica_colisao(tela_ilha.lista_paredes):
+                personagem_ilha.pos_antiga = [personagem_ilha.rect.x, personagem_ilha.rect.y]
+            else:
+                personagem_ilha.rect.x = personagem_ilha.pos_antiga[0] 
+                personagem_ilha.rect.y = personagem_ilha.pos_antiga[1]
             #altera tela ilha para tela gym:
             if personagem_ilha.rect.colliderect(tela_ilha.porta_gym) and self.tela_ilha:
                 self.tela_ilha = False

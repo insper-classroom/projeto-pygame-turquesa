@@ -4,6 +4,7 @@ from constantes import *
 class Desenha_fundo:
     def __init__(self):
         self.fundo = pygame.transform.scale((pygame.image.load('img/map-gym.png')),(640, 600))
+        self.porta_gym = pygame.Rect(173, 594, 81, 5)
         self.lista_paredes = [
             pygame.Rect(380, 20, 233, 5),
             pygame.Rect(612, 20, 5, 90),
@@ -25,7 +26,7 @@ class Desenha_fundo:
             pygame.Rect(290, 484, 5, 65),
             pygame.Rect(253, 549, 42, 5),
             pygame.Rect(253, 549, 5, 50),
-            pygame.Rect(173, 594, 81, 5),
+            # pygame.Rect(173, 594, 81, 5), #porta
             pygame.Rect(168, 552, 5, 47),
             pygame.Rect(130, 549, 42, 5),
             pygame.Rect(130, 507, 5, 43),
@@ -69,3 +70,4 @@ class Desenha_fundo:
         for parede in self.lista_paredes:
             pygame.draw.rect(window,PRETO, parede)
         window.blit(self.fundo, (0, 0))
+        pygame.draw.rect(window,PRETO, self.porta_gym)

@@ -73,3 +73,4 @@ class Batalha:
             self.botao = 3
         elif event.type == pygame.KEYDOWN and self.botao == 4 and event.key == pygame.K_UP:
             self.botao = 1
+    

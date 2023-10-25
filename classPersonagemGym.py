@@ -6,7 +6,7 @@ class Personagem:
         self.personagem = pygame.transform.scale((pygame.image.load('img/personagem.png')),(30, 35))
         self.rect = self.personagem.get_rect()
         self.rect.x = 198
-        self.rect.y = 540
+        self.rect.y = 500
         self.velocidade = [0, 0]
         self.pos_antiga = [0, 0]
     

@@ -21,3 +21,13 @@ class Personagem_ilha:
         
         next_pos = self.rect.y + self.velocidade[1]
         self.rect.y = next_pos
+    
+    def verifica_colisao(self, lista_paredes):
+
+        is_hit = False
+        for parede in lista_paredes:
+            if parede.colliderect(self.rect):
+                is_hit = True
+                break
+
+        return is_hit
