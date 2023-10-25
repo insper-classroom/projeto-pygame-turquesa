@@ -7,7 +7,6 @@ from classBatalhas import *
 from classDesenhailha import *
 from classPersonagemIlha import *
 from classDesenhaCura import *
-from classPersonagemPc import *
 
 class Jogo:
     def __init__(self):
@@ -16,7 +15,6 @@ class Jogo:
 
         #TELAS
         self.window_ilha = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
-        self.window_pc = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt1 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt2 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
@@ -27,7 +25,6 @@ class Jogo:
         self.rodando_jogo = True
         self.tela_ilha = True
         #tela centro pokemon:
-        self.tela_pc = False
         #INFOS TELA GYM:
         self.tela_gym_jogo = False
         #INFOS TELA BATALHA1:
@@ -52,7 +49,6 @@ class Jogo:
         treinador4 = Treinador4()
         batalha = Batalha()
         desenha_cura = Cura_pokemon()
-        personagemPc = Personagem_pc()
 
         while self.rodando_jogo:
 
@@ -116,8 +112,10 @@ class Jogo:
             else:
                 personagem_ilha.rect.x = personagem_ilha.pos_antiga[0] 
                 personagem_ilha.rect.y = personagem_ilha.pos_antiga[1]
-
             #altera tela ilha para tela gym:
+            # if personagem_ilha.rect.colliderect(tela_ilha.porta_pc) and self.tela_ilha:
+            #     desenha_cura.desenha_box(self.window_ilha)
+            #     print('teste')
             if personagem_ilha.rect.colliderect(tela_ilha.porta_gym) and self.tela_ilha:
                 self.tela_ilha = False
                 self.tela_gym_jogo = True
@@ -128,10 +126,7 @@ class Jogo:
                 self.tela_ilha = True
                 personagem_ilha.rect.x = 205 
                 personagem_ilha.rect.y = 523
-            #altera tela ilha para tela pc:
-            if personagem_ilha.rect.colliderect(tela_ilha.porta_pc) and self.tela_ilha:
-                self.tela_ilha = False
-                self.tela_pc = True
+
             #altera telas de batalha:
             if treinador1.rect.colliderect(personagem.rect) and not self.bol_batalha1:
                 self.tela_gym_jogo = False
@@ -153,10 +148,6 @@ class Jogo:
                 personagem_ilha.desenha_personagem(self.window_ilha)
                 personagem_ilha.altera_sprite_vertical()
                 personagem_ilha.altera_sprite_horizontal()
-
-            elif self.tela_pc:
-                desenha_cura.desenha_pc(self.window_pc)
-                personagemPc.desenha_personagem(self.window_pc)
 
             elif self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
