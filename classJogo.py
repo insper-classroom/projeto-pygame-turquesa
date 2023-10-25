@@ -45,6 +45,7 @@ class Jogo:
         treinador3 = Treinardor3()
         treinador4 = Treinador4()
         batalha = Batalha()
+        
 
         while self.rodando_jogo:
 
@@ -82,7 +83,7 @@ class Jogo:
                 elif event.type == pygame.KEYUP and event.key == pygame.K_d:
                     personagem.velocidade[0] += -2
                     personagem_ilha.velocidade[0] += -2
-                    
+                #Arrumar para nao mudar todas as telas
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                     batalha.botao = 1
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
@@ -103,6 +104,19 @@ class Jogo:
                 personagem.rect.x = personagem.pos_antiga[0] 
                 personagem.rect.y = personagem.pos_antiga[1] 
             
+            #altera tela ilha para tela gym:
+            if personagem_ilha.rect.colliderect(tela_ilha.porta_gym) and self.tela_ilha:
+                self.tela_ilha = False
+                self.tela_gym_jogo = True
+                personagem.rect.x = 198
+                personagem.rect.y = 500
+            elif personagem.rect.colliderect(tela_gym.porta_gym) and self.tela_gym_jogo:
+                self.tela_gym_jogo = False
+                self.tela_ilha = True
+                personagem_ilha.rect.x = 205 
+                personagem_ilha.rect.y = 523
+
+            #altera telas de batalha:
             if treinador1.rect.colliderect(personagem.rect) and not self.bol_batalha1:
                 self.tela_gym_jogo = False
                 self.treinador_1 = True
