@@ -3,7 +3,7 @@ from constantes import *
 
 class Personagem:
     def __init__(self):
-        self.personagem = pygame.transform.scale((pygame.image.load('img/personagem.png')),(30, 30))
+        self.personagem = pygame.transform.scale((pygame.image.load('img/personagem.png')),(30, 35))
         self.rect = self.personagem.get_rect()
         self.rect.x = 198
         self.rect.y = 540
