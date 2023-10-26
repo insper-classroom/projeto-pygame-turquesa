@@ -210,7 +210,6 @@ class Jogo:
                 personagem_pc.desenha_personagem(self.window_pc)
                 personagem_pc.altera_sprite_vertical()
                 personagem_pc.altera_sprite_horizontal()
-                # print(pygame.mouse.get_pos())
                 if personagem_pc.rect.colliderect(desenha_cura.balcao):
                     desenha_cura.desenha_box(self.window_pc)
 

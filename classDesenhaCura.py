@@ -12,6 +12,24 @@ class Cura_pokemon():
         self.rect_nao = pygame.Rect(510, 538, 50, 30)
         self.lista_paredes = [
             pygame.Rect(185, 250, 272, 5),
+            pygame.Rect(186, 179, 5, 70),
+            pygame.Rect(112, 206, 50, 5),
+            pygame.Rect(73, 200, 18, 5),
+            pygame.Rect(36, 200, 10, 10),
+            pygame.Rect(13, 233, 5, 70),
+            pygame.Rect(20, 334, 60, 60),
+            pygame.Rect(15, 408, 5, 35),
+            pygame.Rect(28, 452, 10, 5),
+            pygame.Rect(40, 470, 250, 5),
+            pygame.Rect(352, 470, 250, 5),
+            pygame.Rect(605, 451, 10, 5),
+            pygame.Rect(620, 232, 5, 250),
+            pygame.Rect(506, 366, 200, 55),
+            pygame.Rect(501, 322, 70, 50),
+            pygame.Rect(595, 198, 10, 10),
+            pygame.Rect(507, 189, 75, 5),
+            pygame.Rect(447, 181, 5, 70),
+            pygame.Rect(468, 200, 35, 5),
         ]
         self.texto1 = self.fonte.render('Você gostaria de curar seus pokemons?', True, PRETO)
         self.texto_sim = self.fonte.render('SIM', True, PRETO)
@@ -20,19 +38,19 @@ class Cura_pokemon():
 
     def desenha_pc(self, window):
         window.fill((0, 0, 0))
-        window.blit(self.img_pc, (0, 100))
         for parede in self.lista_paredes:
             pygame.draw.rect(window, CIANO, parede)
         pygame.draw.rect(window, PRETO, self.porta_pc)
         pygame.draw.rect(window, PRETO, self.balcao)
+        window.blit(self.img_pc, (0, 100))
 
     def desenha_box(self, window):
         window.blit(self.img_box, (0, 450))
         window.blit(self.texto1, (30, 515))
-        pygame.draw.rect(window, (188, 188, 188), self.rect_sim)
         pygame.draw.rect(window, (188, 188, 188), self.rect_nao)
-        window.blit(self.texto_sim, (517, 490))
+        pygame.draw.rect(window, (188, 188, 188), self.rect_sim)
         window.blit(self.texto_nao, (517, 540))
+        window.blit(self.texto_sim, (517, 490))
     
     def verifica_click_sim(self, x, y):
         if self.rect_sim.collidepoint(x, y):
