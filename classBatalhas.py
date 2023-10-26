@@ -40,14 +40,19 @@ class Batalha:
             window.blit(ataque1, (50, 475))
             pygame.display.update()
             time.sleep(1)
-            window.blit(self.lista_imagens[4], (0, 450))
-            ataque1 = self.fonteBatalha.render("Foe PIKACHU used TACKLE!", True, (0,0,0))
-            self.vida_jogador -= 30
-            window.blit(ataque1, (50, 475))
-            pygame.display.update()
-            time.sleep(1)
+            if dicionario['vida_pokemon'] > 0:
+                window.blit(self.lista_imagens[4], (0, 450))
+                ataque1 = self.fonteBatalha.render("Foe PIKACHU used TACKLE!", True, (0,0,0))
+                self.vida_jogador -= 30
+                window.blit(ataque1, (50, 475))
+                pygame.display.update()
+                time.sleep(1)
             if self.vida_jogador <= 0:
                 self.tela_atual = 'morte'
+                morte = self.fonteBatalha.render("CHARMANDER Fainted!", True, (0,0,0))
+                window.blit(morte, (50, 475))
+                pygame.display.update()
+                time.sleep(1)
             elif dicionario['vida_pokemon'] <= 0:
                 self.tela_atual = 'vitória'
             else:
@@ -77,6 +82,12 @@ class Batalha:
                 window.blit(self.lista_imagens[5], (210, 538))
             elif self.botao == 4:
                 window.blit(self.lista_imagens[5], (20, 538))
+        elif self.tela_atual =='vitória':
+            morte = self.fonteBatalha.render("Foe PIKACHU Fainted!", True, (0,0,0))
+            window.blit(morte, (50, 475))
+            pygame.display.update()
+            time.sleep(1)
+            self.tela_atual = 'fim'
         self.inimigo_compara = dicionario['vidamax_pokemon']
 
     def botoes_batalha(self, event, dicionario, window):

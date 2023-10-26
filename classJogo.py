@@ -42,10 +42,13 @@ class Jogo:
         self.bol_batalha1 = False
         #INFOS TELA BATALHA2:
         self.treinador_2 = False
+        self.bol_batalha2 = False
         #INFOS TELA BATALHA3:
         self.treinador_3 = False
+        self.bol_batalha3 = False
         #INFOS TELA BATALHA4:
         self.treinador_4 = False
+        self.bol_batalha4 = False
 
 
     def iniciar_jogo(self):
@@ -198,14 +201,14 @@ class Jogo:
             if treinador1.rect.colliderect(personagem.rect) and not self.bol_batalha1:
                 self.tela_gym_jogo = False
                 self.treinador_1 = True
-                self.bol_batalha1 = True #teste para sair da batalha
-            elif treinador2.rect.colliderect(personagem.rect):
+                # self.bol_batalha1 = True #teste para sair da batalha
+            elif treinador2.rect.colliderect(personagem.rect) and not self.bol_batalha2:
                 self.tela_gym_jogo = False
                 self.treinador_2 = True
-            elif treinador3.rect.colliderect(personagem.rect):
+            elif treinador3.rect.colliderect(personagem.rect) and not self.bol_batalha3:
                 self.tela_gym_jogo = False
                 self.treinador_3 = True
-            elif treinador4.rect.colliderect(personagem.rect):
+            elif treinador4.rect.colliderect(personagem.rect) and not self.bol_batalha4:
                 self.tela_gym_jogo = False
                 self.treinador_4 = True
 
@@ -247,8 +250,30 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
-
-
+            #Alteração de tela no fim da batalha
+            if batalha.tela_atual == 'fim':
+                self.tela_gym_jogo = True
+                if self.treinador_1 == True:
+                    self.bol_batalha1 = True
+                    self.treinador_1 = False
+                    personagem.rect.x = 198
+                    personagem.rect.y = 500
+                if self.treinador_2 == True:
+                    self.bol_batalha2 = True
+                    self.treinador_2 = False
+                    personagem.rect.x = 198
+                    personagem.rect.y = 500
+                if self.treinador_3 == True:
+                    self.bol_batalha3 = True
+                    self.treinador_3 = False
+                    personagem.rect.x = 198
+                    personagem.rect.y = 500
+                if self.treinador_4 == True:
+                    self.bol_batalha4 = True
+                    self.treinador_4 = False
+                    personagem.rect.x = 198
+                    personagem.rect.y = 500
+                batalha.tela_atual = 'escolhendo'
             pygame.display.update()
 
 game = Jogo()
