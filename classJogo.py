@@ -236,10 +236,10 @@ class Jogo:
 
             elif self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
-                treinador1.desenha_treinador1(self.window_gym)
-                treinador2.desenha_treinador2(self.window_gym)
-                treinador3.desenha_treinador3(self.window_gym)
-                treinador4.desenha_treinador4(self.window_gym)
+                treinador1.desenha_treinador1(self.window_gym, self.bol_batalha1)
+                treinador2.desenha_treinador2(self.window_gym, self.bol_batalha2)
+                treinador3.desenha_treinador3(self.window_gym, self.bol_batalha3)
+                treinador4.desenha_treinador4(self.window_gym, self.bol_batalha4)
                 personagem.desenha_personagem(self.window_gym)
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
