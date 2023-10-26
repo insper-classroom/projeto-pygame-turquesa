@@ -9,6 +9,7 @@ from classPersonagemIlha import *
 from classDesenhaCura import *
 from classPersonagemPc import *
 from classDesenhainicio import *
+from classDesenhaInstrucao import *
 
 class Jogo:
     def __init__(self):
@@ -17,6 +18,7 @@ class Jogo:
 
         #TELAS
         self.tela_inicial = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        self.tela_instrucao = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_ilha = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_pc = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
@@ -26,10 +28,11 @@ class Jogo:
         self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
 
         #INFOS TELA INICIAL:
-        self.tela_inicio = True
+        self.tela_inicio = False
+        self.tela_instrucoes = False
         #INFOS TELA ILHA:
         self.rodando_jogo = True
-        self.tela_ilha = False
+        self.tela_ilha = True
         #tela centro pokemon:
         self.tela_pc = False
         #INFOS TELA GYM:
@@ -47,6 +50,7 @@ class Jogo:
 
     def iniciar_jogo(self):
         desenha_inicio = Inicio()
+        desenha_instrucao = Instrucao()
         tela_ilha = Desenha_ilha()
         personagem_ilha = Personagem_ilha()
         tela_gym = Desenha_fundo()
@@ -205,9 +209,12 @@ class Jogo:
                 self.tela_gym_jogo = False
                 self.treinador_4 = True
 
-            if self.tela_inicial:
+            if self.tela_inicio:
                 desenha_inicio.desenha_inicio(self.tela_inicial)
-                
+
+            elif self.tela_instrucoes:
+                desenha_instrucao.desenha_inicio(self.tela_inicial)
+
             elif self.tela_ilha:
                 tela_ilha.desenha_fundo(self.window_ilha)
                 personagem_ilha.desenha_personagem(self.window_ilha)
