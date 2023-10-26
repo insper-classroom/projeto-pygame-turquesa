@@ -8,6 +8,7 @@ from classDesenhailha import *
 from classPersonagemIlha import *
 from classDesenhaCura import *
 from classPersonagemPc import *
+from classDesenhainicio import *
 
 class Jogo:
     def __init__(self):
@@ -15,6 +16,7 @@ class Jogo:
         pygame.display.set_caption('pokemon-gym')
 
         #TELAS
+        self.tela_inicial = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_ilha = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_gym = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.window_pc = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
@@ -23,9 +25,11 @@ class Jogo:
         self.windowt3 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
 
+        #INFOS TELA INICIAL:
+        self.tela_inicio = True
         #INFOS TELA ILHA:
         self.rodando_jogo = True
-        self.tela_ilha = True
+        self.tela_ilha = False
         #tela centro pokemon:
         self.tela_pc = False
         #INFOS TELA GYM:
@@ -42,6 +46,7 @@ class Jogo:
 
 
     def iniciar_jogo(self):
+        desenha_inicio = Inicio()
         tela_ilha = Desenha_ilha()
         personagem_ilha = Personagem_ilha()
         tela_gym = Desenha_fundo()
@@ -114,6 +119,8 @@ class Jogo:
                     elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 410
+                    elif desenha_inicio.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        print('clicou')
 
                 #Arrumar para nao mudar todas as telas
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT and batalha.tela_atual == 'escolhendo':
@@ -198,8 +205,10 @@ class Jogo:
                 self.tela_gym_jogo = False
                 self.treinador_4 = True
 
-
-            if self.tela_ilha:
+            if self.tela_inicial:
+                desenha_inicio.desenha_inicio(self.tela_inicial)
+                
+            elif self.tela_ilha:
                 tela_ilha.desenha_fundo(self.window_ilha)
                 personagem_ilha.desenha_personagem(self.window_ilha)
                 personagem_ilha.altera_sprite_vertical()
