@@ -4,9 +4,10 @@ from constantes import *
 class Instrucao():
     def __init__(self):
         self.img_fundo = pygame.transform.scale((pygame.image.load('img/instrucoes.png')),(640, 600))
-        self.rect_jogar = []
+        self.rect_jogar = pygame.Rect(244, 573, 185, 25)
     
     def desenha_inicio(self, window):
+        pygame.draw.rect(window, CIANO, self.rect_jogar)
         window.blit(self.img_fundo, (0,0))
 
     def verifica_click_sim(self, x, y):

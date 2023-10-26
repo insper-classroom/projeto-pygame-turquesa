@@ -28,11 +28,11 @@ class Jogo:
         self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
 
         #INFOS TELA INICIAL:
-        self.tela_inicio = False
+        self.tela_inicio = True
         self.tela_instrucoes = False
         #INFOS TELA ILHA:
         self.rodando_jogo = True
-        self.tela_ilha = True
+        self.tela_ilha = False
         #tela centro pokemon:
         self.tela_pc = False
         #INFOS TELA GYM:
@@ -124,8 +124,11 @@ class Jogo:
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 410
                     elif desenha_inicio.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-                        print('clicou')
-
+                        self.tela_inicio = False
+                        self.tela_instrucoes = True
+                    elif desenha_instrucao.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        self.tela_instrucoes =  False
+                        self.tela_ilha = True
                 #Arrumar para nao mudar todas as telas
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT and batalha.tela_atual == 'escolhendo':
                     batalha.botao = 1
@@ -199,12 +202,15 @@ class Jogo:
                 self.tela_gym_jogo = False
                 self.treinador_1 = True
                 self.bol_batalha1 = True #teste para sair da batalha
+
             elif treinador2.rect.colliderect(personagem.rect):
                 self.tela_gym_jogo = False
                 self.treinador_2 = True
+
             elif treinador3.rect.colliderect(personagem.rect):
                 self.tela_gym_jogo = False
                 self.treinador_3 = True
+
             elif treinador4.rect.colliderect(personagem.rect):
                 self.tela_gym_jogo = False
                 self.treinador_4 = True
@@ -214,7 +220,7 @@ class Jogo:
 
             elif self.tela_instrucoes:
                 desenha_instrucao.desenha_inicio(self.tela_inicial)
-
+                
             elif self.tela_ilha:
                 tela_ilha.desenha_fundo(self.window_ilha)
                 personagem_ilha.desenha_personagem(self.window_ilha)
