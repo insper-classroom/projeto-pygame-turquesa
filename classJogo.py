@@ -51,7 +51,7 @@ class Jogo:
         self.bol_batalha4 = False
 
         #BOLEANOS MUSICAS:
-        
+
         self.inicial_tocando = False
         self.ilha_tocando = False
         self.batalha_tocando = False
@@ -102,6 +102,7 @@ class Jogo:
                 self.ilha_tocando = False
                 pygame.mixer.music.load('snd/musica-gym.wav')
                 pygame.mixer.music.play(-1)
+                self.batalha_tocando = False
                 self.musica_gym = True
             elif self.treinador_1 and not self.batalha_tocando:
                 pygame.mixer.music.stop()
