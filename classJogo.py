@@ -353,7 +353,14 @@ class Jogo:
                     self.treinador_4 = False
                     personagem.rect.x = 198
                     personagem.rect.y = 500
-                batalha.tela_atual = 'escolhendo'
+                if batalha.pokemons[batalha.pokemonatual]['vida'] > 0:
+                    batalha.tela_atual = 'escolhendo'
+                else:
+                    self.tela_gym_jogo = True
+                    self.bol_batalha1 = False
+                    self.bol_batalha2 = False
+                    self.bol_batalha3 = False
+                    self.bol_batalha4 = False
             pygame.display.update()
 
 game = Jogo()

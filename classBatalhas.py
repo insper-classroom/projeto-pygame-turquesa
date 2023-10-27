@@ -19,9 +19,16 @@ class Batalha:
         facade = {'dano': 70, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
         slam = {'dano': 30, 'precisao': 100, 'tipo': 'normal', 'pps': 35, 'nome': 'Slam'}
         thunderbolt = {'dano': 30, 'precisao': 100, 'tipo': 'eletrico', 'pps': 35, 'nome': 'Thunderbolt'}
-        self.pokemons = {
-            'PIKACHU': {'vida': 270, 'vida_max': 270, 'ataques': [tackle, thunderbolt, slam, facade]},
-        }
+        cut = {'dano': 50, 'precisao': 95, 'tipo': 'normal', 'pps': 20, 'nome': 'Cut'}
+        fury_cutter = {'dano': 10, 'precisao': 95, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
+        metal_claw = {'dano': 50, 'precisao': 95, 'tipo': 'metal', 'pps': 30, 'nome': 'Metal Claw'}
+        pursuit = {'dano': 40, 'precisao': 100, 'tipo': 'escuridao', 'pps': 20, 'nome': 'Pursuit'}
+        self.pokemons = [
+            {'vida': 20, 'vida_max': 270, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'PIKACHU'},
+            {'vida': 270, 'vida_max': 270, 'ataques': [cut, fury_cutter, metal_claw, pursuit], 'nome': 'SCIZOR'},
+            {'vida': 270, 'vida_max': 270, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'VENUSAUR'},
+        ]
+        self.pokemonatual = 0
         self.botao = 1
         self.inimigo_compara = 0
         self.tela_atual = 'escolhendo'
@@ -29,37 +36,40 @@ class Batalha:
     def desenha_batalha(self, window, dicionario):
         if dicionario['vida_pokemon'] < 0:
             dicionario['vida_pokemon'] = 0
+        if self.pokemons[self.pokemonatual]['vida'] < 0:
+            self.pokemons[self.pokemonatual]['vida'] = 0
         window.fill((188, 188, 188))
         window.blit(self.lista_imagens[1], (0, 400))
         window.blit(self.lista_imagens[2], (40, 90))
         window.blit(self.lista_imagens[2], (310, 290))
         window.blit(self.lista_imagens[1], (290, 230))
-        window.blit(self.lista_imagens[6], (370, 130))
+        window.blit(self.lista_imagens[7], (30, 300))
         if dicionario['vida_pokemon'] > 0:
-            window.blit(self.lista_imagens[7], (30, 300))
-        blit_inimigo = self.fonte.render(f'MAKUHITA: {dicionario["vida_pokemon"]}/{dicionario["vidamax_pokemon"]}', True, (0, 0, 0))
+            window.blit(self.lista_imagens[6], (370, 130))
+        blit_inimigo = self.fonte.render(f'{dicionario["nome"]}: {dicionario["vida_pokemon"]}/{dicionario["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_inimigo, (80, 115))
-        blit_jogador = self.fonte.render(f'PIKACHU: {self.pokemons["PIKACHU"]["vida"]}/{self.pokemons["PIKACHU"]["vida_max"]}', True, (0, 0, 0))
+        blit_jogador = self.fonte.render(f'{self.pokemons[self.pokemonatual]["nome"]}: {self.pokemons[self.pokemonatual]["vida"]}/{self.pokemons[0]["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_jogador, (350, 310))
         if self.tela_atual == 'texto_batalha':
             window.blit(self.lista_imagens[4], (0, 450))
-            ataque1 = self.fonteBatalha.render(f"PIKACHU used {self.pokemons['PIKACHU']['ataques'][self.botao - 1]['nome']}!", True, (0,0,0))
+            ataque1 = self.fonteBatalha.render(f"{self.pokemons[self.pokemonatual]['nome']} used {self.pokemons[self.pokemonatual]['ataques'][self.botao - 1]['nome']}!", True, (0,0,0))
             window.blit(ataque1, (50, 475))
             pygame.display.update()
             time.sleep(1)
             if dicionario['vida_pokemon'] > 0:
                 window.blit(self.lista_imagens[4], (0, 450))
                 ataque1 = self.fonteBatalha.render("Foe MAKUHITA used Tackle!", True, (0,0,0))
-                self.pokemons["PIKACHU"]["vida"] -= 30
+                self.pokemons[0]["vida"] -= 30
                 window.blit(ataque1, (50, 475))
                 pygame.display.update()
                 time.sleep(1)
-            if self.pokemons["PIKACHU"]["vida"] <= 0:
-                self.tela_atual = 'morte'
-                morte = self.fonteBatalha.render("PIKACHU Fainted!", True, (0,0,0))
+            if self.pokemons[0]["vida"] <= 0:
+                window.blit(self.lista_imagens[4], (0, 450))
+                morte = self.fonteBatalha.render(f"{self.pokemons[self.pokemonatual]['nome']} Fainted!", True, (0,0,0))
                 window.blit(morte, (50, 475))
                 pygame.display.update()
                 time.sleep(1)
+                self.tela_atual = 'fim'
             elif dicionario['vida_pokemon'] <= 0:
                 self.tela_atual = 'vitória'
             else:
@@ -77,10 +87,10 @@ class Batalha:
                 window.blit(self.lista_imagens[3], (290, 505))
         elif self.tela_atual == 'batalha':
             window.blit(self.lista_imagens[0], (0, 450))
-            ataque1 = self.fonteBatalha.render("Tackle", True, (0,0,0))
-            ataque2 = self.fonteBatalha.render("Thunderbolt", True, (0,0,0))
-            ataque3 = self.fonteBatalha.render("Slam", True, (0,0,0))
-            ataque4 = self.fonteBatalha.render("Facade", True, (0,0,0))
+            ataque1 = self.fonteBatalha.render(self.pokemons[self.pokemonatual]['ataques'][0]['nome'], True, (0,0,0))
+            ataque2 = self.fonteBatalha.render(self.pokemons[self.pokemonatual]['ataques'][1]['nome'], True, (0,0,0))
+            ataque3 = self.fonteBatalha.render(self.pokemons[self.pokemonatual]['ataques'][2]['nome'], True, (0,0,0))
+            ataque4 = self.fonteBatalha.render(self.pokemons[self.pokemonatual]['ataques'][3]['nome'], True, (0,0,0))
             window.blit(ataque1, (40, 475))
             window.blit(ataque2, (220, 475))
             window.blit(ataque3, (220, 525))
@@ -93,6 +103,22 @@ class Batalha:
                 window.blit(self.lista_imagens[5], (200, 538))
             elif self.botao == 4:
                 window.blit(self.lista_imagens[5], (20, 538))
+            if self.botao == 1:
+                pps = self.pokemons[self.pokemonatual]['ataques'][0]['pps']
+                pps = self.fonteBatalha.render(f'{pps}', True, (0,0,0))
+                window.blit(pps, (520, 475))
+            elif self.botao == 2:
+                pps = self.pokemons[self.pokemonatual]['ataques'][1]['pps']
+                pps = self.fonteBatalha.render(f'{pps}', True, (0,0,0))
+                window.blit(pps, (520, 475))
+            elif self.botao == 3:
+                pps = self.pokemons[self.pokemonatual]['ataques'][2]['pps']
+                pps = self.fonteBatalha.render(f'{pps}', True, (0,0,0))
+                window.blit(pps, (520, 475))
+            elif self.botao == 4:
+                pps = self.pokemons[self.pokemonatual]['ataques'][3]['pps']
+                pps = self.fonteBatalha.render(f'{pps}', True, (0,0,0))
+                window.blit(pps, (520, 475))
         elif self.tela_atual =='vitória':
             window.blit(self.lista_imagens[4], (0, 450))
             morte = self.fonteBatalha.render("Foe MAKUHITA Fainted!", True, (0,0,0))
@@ -100,7 +126,7 @@ class Batalha:
             pygame.display.update()
             time.sleep(1)
             self.tela_atual = 'fim'
-        self.inimigo_compara = dicionario['vidamax_pokemon']
+        self.inimigo_compara = dicionario['vida_max']
 
     def botoes_batalha(self, event, dicionario, window):
         if event.type == pygame.KEYDOWN and self.botao == 1 and event.key == pygame.K_RIGHT:
@@ -121,14 +147,17 @@ class Batalha:
             self.botao = 1
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 1:
             dicionario['vida_pokemon'] -= 40
+            self.pokemons[self.pokemonatual]['ataques'][0]['pps'] -= 1
             self.tela_atual = 'texto_batalha'
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 2:
             dicionario['vida_pokemon'] -= 95
+            self.pokemons[self.pokemonatual]['ataques'][1]['pps'] -= 1
             self.tela_atual = 'texto_batalha'
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 3:
             dicionario['vida_pokemon'] -= 80
+            self.pokemons[self.pokemonatual]['ataques'][2]['pps'] -= 1
             self.tela_atual = 'texto_batalha'
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 4:
             dicionario['vida_pokemon'] -= 70
+            self.pokemons[self.pokemonatual]['ataques'][3]['pps'] -= 1
             self.tela_atual = 'texto_batalha'
-    
