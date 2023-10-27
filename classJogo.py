@@ -10,6 +10,7 @@ from classDesenhaCura import *
 from classPersonagemPc import *
 from classDesenhainicio import *
 from classDesenhaInstrucao import *
+from classFundoHp import *
 
 class Jogo:
     def __init__(self):
@@ -26,8 +27,8 @@ class Jogo:
         self.windowt2 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt3 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
-
-        #INFOS TELA INICIAL:
+        self.windowHP = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        #INFOS TELA INICIAL:    
         self.tela_inicio = True
         self.tela_instrucoes = False
         #INFOS TELA ILHA:
@@ -49,7 +50,8 @@ class Jogo:
         #INFOS TELA BATALHA4:
         self.treinador_4 = False
         self.bol_batalha4 = False
-
+        #INFOS TELA hp:
+        self.tela_hp = False
         #BOLEANOS MUSICAS:
 
         self.inicial_tocando = False
@@ -83,6 +85,7 @@ class Jogo:
         desenha_cura = Cura_pokemon()
         personagem_pc = Personagem_pc()
 
+        tela_hp = Telahp()
         while self.rodando_jogo:
             
             #SISTEMA DE MUSICA:
@@ -97,12 +100,15 @@ class Jogo:
                 pygame.mixer.music.play(-1)
                 self.musica_pc = False
                 self.ilha_tocando = True
+                self.musica_gym = False
             elif self.tela_gym_jogo and not self.musica_gym:
+                print('entrou')
                 pygame.mixer.music.stop()
                 self.ilha_tocando = False
                 pygame.mixer.music.load('snd/musica-gym.wav')
                 pygame.mixer.music.play(-1)
                 self.batalha_tocando = False
+                self.lider_tocando = False
                 self.musica_gym = True
             elif self.treinador_1 and not self.batalha_tocando:
                 pygame.mixer.music.stop()
@@ -127,6 +133,7 @@ class Jogo:
                 self.batalha_tocando = False
                 pygame.mixer.music.load('snd/batalha-lider.wav')
                 pygame.mixer.music.play(-1)
+                self.musica_gym = False
                 self.lider_tocando = True
             elif self.tela_pc and not self.musica_pc:
                 pygame.mixer.music.stop()
@@ -134,6 +141,7 @@ class Jogo:
                 pygame.mixer.music.play(-1)
                 self.ilha_tocando = False
                 self.musica_pc = True
+
 
             #EVENTOS / INPUTS:
             for event in pygame.event.get():
@@ -191,6 +199,10 @@ class Jogo:
                     elif desenha_instrucao.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         self.tela_instrucoes =  False
                         self.tela_ilha = True
+                    elif tela_hp.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        self.tela_hp = False
+                        self.tela_pc = True
+
                 #Arrumar para nao mudar todas as telas
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT and batalha.tela_atual == 'escolhendo':
                     batalha.botao = 1
@@ -290,7 +302,12 @@ class Jogo:
                 personagem_pc.altera_sprite_horizontal()
                 if personagem_pc.rect.colliderect(desenha_cura.balcao):
                     desenha_cura.desenha_box(self.window_pc)
-
+                elif personagem_pc.rect.colliderect(desenha_cura.rect_pc):
+                    self.tela_pc = False
+                    self.tela_hp = True
+                    personagem_pc.rect.x = 468
+                    personagem_pc.rect.y = 240
+                
             elif self.tela_gym_jogo:
                 tela_gym.desenha_mapa(self.window_gym)
                 treinador1.desenha_treinador1(self.window_gym, self.bol_batalha1)
@@ -309,6 +326,9 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
+
+            elif self.tela_hp:
+                tela_hp.desenha(self.windowHP)
 
             #Alteração de tela no fim da batalha
             if batalha.tela_atual == 'fim':

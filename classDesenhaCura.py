@@ -10,6 +10,7 @@ class Cura_pokemon():
         self.balcao = pygame.Rect(185, 255, 272, 8)
         self.rect_sim = pygame.Rect(510, 488, 50, 30)
         self.rect_nao = pygame.Rect(510, 538, 50, 30)
+        self.rect_pc = pygame.Rect(468, 200, 35, 5)
         self.lista_paredes = [
             pygame.Rect(185, 250, 272, 5),
             pygame.Rect(186, 179, 5, 70),
@@ -29,7 +30,7 @@ class Cura_pokemon():
             pygame.Rect(595, 198, 10, 10),
             pygame.Rect(507, 189, 75, 5),
             pygame.Rect(447, 181, 5, 70),
-            pygame.Rect(468, 200, 35, 5),
+            pygame.Rect(468, 190, 35, 5),
         ]
         self.texto1 = self.fonte.render('Você gostaria de curar seus pokemons?', True, PRETO)
         self.texto_sim = self.fonte.render('SIM', True, PRETO)
@@ -38,6 +39,7 @@ class Cura_pokemon():
 
     def desenha_pc(self, window):
         window.fill((0, 0, 0))
+        pygame.draw.rect(window, PRETO, self.rect_pc)
         for parede in self.lista_paredes:
             pygame.draw.rect(window, CIANO, parede)
         pygame.draw.rect(window, PRETO, self.porta_pc)
@@ -51,7 +53,7 @@ class Cura_pokemon():
         pygame.draw.rect(window, (188, 188, 188), self.rect_sim)
         window.blit(self.texto_nao, (517, 540))
         window.blit(self.texto_sim, (517, 490))
-    
+
     def verifica_click_sim(self, x, y):
         if self.rect_sim.collidepoint(x, y):
             return True
