@@ -50,6 +50,14 @@ class Jogo:
         self.treinador_4 = False
         self.bol_batalha4 = False
 
+        #BOLEANOS MUSICAS:
+        
+        self.inicial_tocando = False
+        self.ilha_tocando = False
+        self.batalha_tocando = False
+        self.lider_tocando = False
+        self.musica_gym = False
+        self.musica_pc = False
 
     def iniciar_jogo(self):
         desenha_inicio = Inicio()
@@ -76,7 +84,57 @@ class Jogo:
         personagem_pc = Personagem_pc()
 
         while self.rodando_jogo:
+            
+            #SISTEMA DE MUSICA:
+            if self.tela_inicio and not self.inicial_tocando:
+                pygame.mixer.music.load('snd/tela-inicial.wav')
+                pygame.mixer.music.play(-1)
+                self.inicial_tocando = True
+            elif self.tela_ilha and not self.ilha_tocando:
+                pygame.mixer.music.stop()
+                self.inicial_tocando = False
+                pygame.mixer.music.load('snd/musica-cidade.wav')
+                pygame.mixer.music.play(-1)
+                self.musica_pc = False
+                self.ilha_tocando = True
+            elif self.tela_gym_jogo and not self.musica_gym:
+                pygame.mixer.music.stop()
+                self.ilha_tocando = False
+                pygame.mixer.music.load('snd/musica-gym.wav')
+                pygame.mixer.music.play(-1)
+                self.musica_gym = True
+            elif self.treinador_1 and not self.batalha_tocando:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load('snd/batalha-comum.wav')
+                pygame.mixer.music.play(-1)
+                self.musica_gym = False
+                self.batalha_tocando = True
+            elif self.treinador_2 and not self.batalha_tocando:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load('snd/batalha-comum.wav')
+                pygame.mixer.music.play(-1)
+                self.musica_gym = False
+                self.batalha_tocando = True
+            elif self.treinador_3 and not self.batalha_tocando:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load('snd/batalha-comum.wav')
+                pygame.mixer.music.play(-1)
+                self.musica_gym = False
+                self.batalha_tocando = True
+            elif self.treinador_4 and not self.lider_tocando:
+                pygame.mixer.music.stop()
+                self.batalha_tocando = False
+                pygame.mixer.music.load('snd/batalha-lider.wav')
+                pygame.mixer.music.play(-1)
+                self.lider_tocando = True
+            elif self.tela_pc and not self.musica_pc:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load('snd/pokemon-center.wav')
+                pygame.mixer.music.play(-1)
+                self.ilha_tocando = False
+                self.musica_pc = True
 
+            #EVENTOS / INPUTS:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.rodando_jogo = False
@@ -153,10 +211,6 @@ class Jogo:
                     batalha.tela_atual = 'escolhendo'
                     batalha. botao = 1
 
-                #TESTE
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    self.treinador_1 = False
-                    self.tela_gym_jogo = True
             #verifica colisao no ginasio
             if not personagem.verifica_colisao(tela_gym.lista_paredes):
                 personagem.pos_antiga = [personagem.rect.x, personagem.rect.y]
@@ -214,6 +268,8 @@ class Jogo:
             elif treinador4.rect.colliderect(personagem.rect) and not self.bol_batalha4:
                 self.tela_gym_jogo = False
                 self.treinador_4 = True
+
+            #desenha telas:
             if self.tela_inicio:
                 desenha_inicio.desenha_inicio(self.tela_inicial)
 
@@ -252,6 +308,7 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
+
             #Alteração de tela no fim da batalha
             if batalha.tela_atual == 'fim':
                 self.tela_gym_jogo = True

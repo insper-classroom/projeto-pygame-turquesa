@@ -66,3 +66,4 @@ class Treinador4:
             'vida_pokemon': 130,
         }
         return dicionario
+    
