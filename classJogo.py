@@ -229,6 +229,19 @@ class Jogo:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
                     batalha.tela_atual = 'escolhendo'
                     batalha. botao = 1
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 2 and batalha.tela_atual == 'escolhendo':
+                    if batalha.pokemonatual == 0 and batalha.pokemons[1]['vida'] <= 0 and batalha.pokemons[2]['vida'] > 0:
+                        batalha.pokemonatual = 2
+                    elif batalha. pokemons[1]['vida'] > 0 and batalha.pokemonatual == 0:
+                        batalha.pokemonatual = 1
+                    elif batalha.pokemonatual == 1 and batalha.pokemons[2]['vida'] <= 0 and batalha.pokemons[0]['vida'] > 0:
+                        batalha.pokemonatual = 0
+                    elif batalha.pokemons[2]['vida'] > 0 and batalha.pokemonatual == 1:
+                        batalha.pokemonatual = 2
+                    elif batalha.pokemonatual == 2 and batalha.pokemons[0]['vida'] <= 0 and batalha.pokemons[1]['vida'] > 0:
+                        batalha.pokemonatual = 1
+                    elif batalha.pokemons[0]['vida'] > 0 and batalha.pokemonatual == 2:
+                        batalha.pokemonatual = 0
 
             #verifica colisao no ginasio
             if not personagem.verifica_colisao(tela_gym.lista_paredes):

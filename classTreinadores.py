@@ -24,8 +24,8 @@ class Treinador2:
             window.blit(self.trainer2_img, (430, 492))
 
     def pokemons_treinador2(self):
-        treinador1 = {'vida_pokemon': 290, 'vida_max': 290, 'ataques': [self.tackle], 'nome': 'MAKUHITA'}
-        return treinador1
+        treinador2 = {'vida_pokemon': 290, 'vida_max': 290, 'ataques': [self.tackle], 'nome': 'MAKUHITA'}
+        return treinador2
 
 class Treinardor3:
     def __init__(self):
@@ -38,8 +38,8 @@ class Treinardor3:
             window.blit(self.trainer3_img, (72, 335))
 
     def pokemons_treinador3(self):
-        treinador1 = {'vida_pokemon': 290, 'vida_max': 290, 'ataques': [self.tackle], 'nome': 'MAKUHITA'}
-        return treinador1
+        treinador3 = {'vida_pokemon': 290, 'vida_max': 290, 'ataques': [self.tackle], 'nome': 'MAKUHITA'}
+        return treinador3
 
 class Treinador4:
     def __init__(self):
@@ -52,10 +52,5 @@ class Treinador4:
             window.blit(self.trainer4_img, (483, 68))
 
     def pokemons_treinador4(self):
-        treinador1 = {'vida_pokemon': 290, 'vida_max': 290, 'ataques': [self.tackle], 'nome': 'MAKUHITA'}
-        return treinador1
-
-    
-        window.blit(self.trainer4_img, (483, 68))
-
-    
+        treinador4 = {'vida_pokemon': 290, 'vida_max': 290, 'ataques': [self.tackle], 'nome': 'MAKUHITA'}
+        return treinador4
