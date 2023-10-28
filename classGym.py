@@ -64,10 +64,14 @@ class Desenha_fundo:
             pygame.Rect(417, 113, 5, 22),
             pygame.Rect(384, 113, 35, 5),
             pygame.Rect(382, 25, 5, 87),
+            pygame.Rect(42, 190, 10, 5),
+            pygame.Rect(439, 498, 10, 5),
+            pygame.Rect(80, 340, 10, 5),
+            pygame.Rect(467, 84, 70, 5),
         ]
 
     def desenha_mapa(self, window):
-        for parede in self.lista_paredes:
-            pygame.draw.rect(window,PRETO, parede)
-        pygame.draw.rect(window,PRETO, self.porta_gym)
+        # for parede in self.lista_paredes:
+        #     pygame.draw.rect(window,PRETO, parede)
+        # pygame.draw.rect(window,PRETO, self.porta_gym)
         window.blit(self.fundo, (0, 0))

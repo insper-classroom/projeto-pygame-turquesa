@@ -39,11 +39,11 @@ class Cura_pokemon():
 
     def desenha_pc(self, window):
         window.fill((0, 0, 0))
-        pygame.draw.rect(window, PRETO, self.rect_pc)
-        for parede in self.lista_paredes:
-            pygame.draw.rect(window, CIANO, parede)
-        pygame.draw.rect(window, PRETO, self.porta_pc)
-        pygame.draw.rect(window, PRETO, self.balcao)
+        # pygame.draw.rect(window, PRETO, self.rect_pc)
+        # for parede in self.lista_paredes:
+        #     pygame.draw.rect(window, CIANO, parede)
+        # pygame.draw.rect(window, PRETO, self.porta_pc)
+        # pygame.draw.rect(window, PRETO, self.balcao)
         window.blit(self.img_pc, (0, 100))
 
     def desenha_box(self, window):

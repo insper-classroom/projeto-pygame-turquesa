@@ -58,11 +58,4 @@ class Treinador4:
     
         window.blit(self.trainer4_img, (483, 68))
 
-    def pokemons_treinador4(self):
-        dicionario = {
-            'treinador': 4,
-            'vidamax_pokemon': 130,
-            'vida_pokemon': 130,
-        }
-        return dicionario
     
