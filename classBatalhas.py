@@ -32,30 +32,35 @@ class Batalha:
         self.botao = 1
         self.inimigo_compara = 0
         self.tela_atual = 'escolhendo'
-    
     def desenha_batalha(self, window, dicionario):
+        #EVITA VIDA NEGATIVA
         if dicionario['vida_pokemon'] < 0:
             dicionario['vida_pokemon'] = 0
         if self.pokemons[self.pokemonatual]['vida'] < 0:
             self.pokemons[self.pokemonatual]['vida'] = 0
+        #DESENHA A TELA DA BATALHA
         window.fill((188, 188, 188))
         window.blit(self.lista_imagens[1], (0, 400))
         window.blit(self.lista_imagens[2], (40, 90))
         window.blit(self.lista_imagens[2], (310, 290))
         window.blit(self.lista_imagens[1], (290, 230))
         window.blit(self.lista_imagens[7], (30, 300))
+        #PARA DE DESENHAR O POKEMON INIMIGO SE ELE MORRER
         if dicionario['vida_pokemon'] > 0:
             window.blit(self.lista_imagens[6], (370, 130))
+        #DESENHA A VIDA DOS POKEMONS
         blit_inimigo = self.fonte.render(f'{dicionario["nome"]}: {dicionario["vida_pokemon"]}/{dicionario["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_inimigo, (80, 115))
         blit_jogador = self.fonte.render(f'{self.pokemons[self.pokemonatual]["nome"]}: {self.pokemons[self.pokemonatual]["vida"]}/{self.pokemons[0]["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_jogador, (350, 310))
+        #DESENHA O ATAQUE DO JOGADOR
         if self.tela_atual == 'texto_batalha':
             window.blit(self.lista_imagens[4], (0, 450))
             ataque1 = self.fonteBatalha.render(f"{self.pokemons[self.pokemonatual]['nome']} used {self.pokemons[self.pokemonatual]['ataques'][self.botao - 1]['nome']}!", True, (0,0,0))
             window.blit(ataque1, (50, 475))
             pygame.display.update()
             time.sleep(1)
+            #ATAQUE DO INIMIGO
             if dicionario['vida_pokemon'] > 0:
                 window.blit(self.lista_imagens[4], (0, 450))
                 ataque1 = self.fonteBatalha.render("Foe MAKUHITA used Tackle!", True, (0,0,0))
@@ -63,13 +68,16 @@ class Batalha:
                 window.blit(ataque1, (50, 475))
                 pygame.display.update()
                 time.sleep(1)
+            #MORTE DO POKEMON DO JOGADOR
             if self.pokemons[0]["vida"] <= 0:
                 window.blit(self.lista_imagens[4], (0, 450))
                 morte = self.fonteBatalha.render(f"{self.pokemons[self.pokemonatual]['nome']} Fainted!", True, (0,0,0))
                 window.blit(morte, (50, 475))
                 pygame.display.update()
                 time.sleep(1)
+                dicionario['vida_pokemon'] = dicionario['vida_max']
                 self.tela_atual = 'fim'
+            #MUDA DE TELA QUANDO A LUTA ACABAR
             elif dicionario['vida_pokemon'] <= 0:
                 self.tela_atual = 'vitória'
             else:
