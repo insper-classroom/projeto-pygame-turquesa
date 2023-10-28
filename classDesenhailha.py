@@ -54,8 +54,8 @@ class Desenha_ilha:
         ]
     
     def desenha_fundo(self, window):
-        for parede in self.lista_paredes:
-            pygame.draw.rect(window, CIANO, parede)
-        pygame.draw.rect(window,PRETO, self.porta_gym)
-        pygame.draw.rect(window,PRETO, self.porta_pc)
+        # for parede in self.lista_paredes:
+        #     pygame.draw.rect(window, CIANO, parede)
+        # pygame.draw.rect(window,PRETO, self.porta_gym)
+        # pygame.draw.rect(window,PRETO, self.porta_pc)
         window.blit(self.fundo, (0, 0))

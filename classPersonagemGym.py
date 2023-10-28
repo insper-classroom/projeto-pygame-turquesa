@@ -15,8 +15,8 @@ class Personagem:
     
     def altera_sprite_horizontal(self):
         
-        next_pos = self.rect.x + self.velocidade[0]
-        self.rect.x = next_pos
+        next_pos = self.rect.x + self.velocidade[0] 
+        self.rect.x = next_pos 
     
     def altera_sprite_vertical(self):
         

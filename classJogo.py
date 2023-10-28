@@ -11,6 +11,7 @@ from classPersonagemPc import *
 from classDesenhainicio import *
 from classDesenhaInstrucao import *
 from classFundoHp import *
+from classDesenhaAvisogym import *
 
 class Jogo:
     def __init__(self):
@@ -60,6 +61,8 @@ class Jogo:
         self.lider_tocando = False
         self.musica_gym = False
         self.musica_pc = False
+        #BOLEANO AVISO:
+        self.aviso_vida = False
 
     def iniciar_jogo(self):
         desenha_inicio = Inicio()
@@ -86,6 +89,7 @@ class Jogo:
         personagem_pc = Personagem_pc()
 
         tela_hp = Telahp()
+        avisos = Avisos()
         while self.rodando_jogo:
             
             #SISTEMA DE MUSICA:
@@ -189,7 +193,9 @@ class Jogo:
                 #Verifica click do mouse
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-                        print('sim')
+                        batalha.pokemons[0]['vida'] = 270
+                        batalha.pokemons[1]['vida'] = 270
+                        batalha.pokemons[2]['vida'] = 270
                     elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 410
@@ -269,18 +275,32 @@ class Jogo:
 
             #altera telas de batalha:
             if treinador1.rect.colliderect(personagem.rect) and not self.bol_batalha1:
-                self.tela_gym_jogo = False
-                self.treinador_1 = True
-                # self.bol_batalha1 = True #teste para sair da batalha
+                if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                    self.tela_gym_jogo = False
+                    self.treinador_1 = True
+                    # self.aviso_vida = False
+                else:
+                    self.aviso_vida = True       
             elif treinador2.rect.colliderect(personagem.rect) and not self.bol_batalha2:
-                self.tela_gym_jogo = False
-                self.treinador_2 = True
+                if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                    self.tela_gym_jogo = False
+                    self.treinador_2 = True
+                else:
+                    self.aviso_vida = True
             elif treinador3.rect.colliderect(personagem.rect) and not self.bol_batalha3:
-                self.tela_gym_jogo = False
-                self.treinador_3 = True
+                if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):                        
+                    self.tela_gym_jogo = False
+                    self.treinador_3 = True
+                else:
+                    self.aviso_vida = True
             elif treinador4.rect.colliderect(personagem.rect) and not self.bol_batalha4:
-                self.tela_gym_jogo = False
-                self.treinador_4 = True
+                if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                    self.tela_gym_jogo = False
+                    self.treinador_4 = True
+                else:
+                    self.aviso_vida = True
+            else:
+                self.aviso_vida = False
 
             #desenha telas:
             if self.tela_inicio:
@@ -317,6 +337,7 @@ class Jogo:
                 personagem.desenha_personagem(self.window_gym)
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
+                avisos.aviso_vida(self.window_gym, self.aviso_vida)
 
             elif self.treinador_1:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
@@ -326,7 +347,6 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
-
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
 
@@ -336,23 +356,23 @@ class Jogo:
                 if self.treinador_1 == True:
                     self.bol_batalha1 = True
                     self.treinador_1 = False
-                    personagem.rect.x = 198
-                    personagem.rect.y = 500
+                    personagem.rect.x = 36
+                    personagem.rect.y = 152
                 if self.treinador_2 == True:
                     self.bol_batalha2 = True
                     self.treinador_2 = False
-                    personagem.rect.x = 198
-                    personagem.rect.y = 500
+                    personagem.rect.x = 430
+                    personagem.rect.y = 454
                 if self.treinador_3 == True:
                     self.bol_batalha3 = True
                     self.treinador_3 = False
-                    personagem.rect.x = 198
-                    personagem.rect.y = 500
+                    personagem.rect.x = 72
+                    personagem.rect.y = 294
                 if self.treinador_4 == True:
                     self.bol_batalha4 = True
                     self.treinador_4 = False
-                    personagem.rect.x = 198
-                    personagem.rect.y = 500
+                    personagem.rect.x = 486
+                    personagem.rect.y = 132
                 if batalha.pokemons[batalha.pokemonatual]['vida'] > 0:
                     batalha.tela_atual = 'escolhendo'
                 elif self. bol_batalha1 == True or self. bol_batalha2 == True or self. bol_batalha3 == True or self. bol_batalha4 == True:
