@@ -29,6 +29,8 @@ class Jogo:
         self.windowt3 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowHP = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        #Fonte:
+        self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 15)
         #INFOS TELA INICIAL:    
         self.tela_inicio = True
         self.tela_instrucoes = False
@@ -106,7 +108,6 @@ class Jogo:
                 self.ilha_tocando = True
                 self.musica_gym = False
             elif self.tela_gym_jogo and not self.musica_gym:
-                print('entrou')
                 pygame.mixer.music.stop()
                 self.ilha_tocando = False
                 pygame.mixer.music.load('snd/musica-gym.wav')
@@ -193,9 +194,9 @@ class Jogo:
                 #Verifica click do mouse
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-                        batalha.pokemons[0]['vida'] = 270
+                        batalha.pokemons[0]['vida'] = 290
                         batalha.pokemons[1]['vida'] = 270
-                        batalha.pokemons[2]['vida'] = 270
+                        batalha.pokemons[2]['vida'] = 350
                     elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 410
@@ -362,6 +363,14 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
+                vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)
+                vida_2 = self.fonte.render(str(batalha.pokemons[2]['vida']), True, BRANCO)
+                vida_3 = self.fonte.render(str(batalha.pokemons[0]['vida']), True, BRANCO)
+                self.windowHP.blit(vida_1, (173, 176))
+                self.windowHP.blit(vida_2, (511, 302))
+                self.windowHP.blit(vida_3, (189, 422))
+                
+                #Desenhar as infos aqui
 
             #Alteração de tela no fim da batalha
             if batalha.tela_atual == 'fim':
