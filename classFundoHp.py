@@ -2,6 +2,9 @@ import pygame
 from constantes import *    
 
 class Telahp():
+    '''
+        Classe responsável por desenhar a tela do computador presente no centro pokemon.
+    '''
     def __init__(self):
         self.img_fundo = pygame.transform.scale((pygame.image.load('img/fundo-hp.png')),(640, 400))
         self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 18)
@@ -20,6 +23,9 @@ class Telahp():
         self.max3 = self.fonte2.render('/ 290', True, BRANCO)
 
     def desenha(self, window):
+        '''
+            Função que desenha a tela do computador, imagens armazenada no init da classe.
+        '''
         window.fill((188, 188, 188))
         window.blit(self.img_fundo, (-2, 100))
         window.blit(self.texto1, (548, 460))
@@ -37,5 +43,8 @@ class Telahp():
         window.blit(self.max3, (225, 422))
 
     def verifica_click_sim(self, x, y):
+        '''
+            Função que verifica se o botão 'sair' foi clicado.
+        '''
         if self.rect_sair.collidepoint(x, y):
             return True

@@ -2,6 +2,10 @@ import pygame
 from constantes import *
 
 class Desenha_fundo:
+    '''
+        Classe responsável por desenhar o fundo e entregar as paredes (rects) para
+        realizar a colisao com as paredes.
+    '''
     def __init__(self):
         self.fundo = pygame.transform.scale((pygame.image.load('img/map-gym.png')),(640, 600))
         self.porta_gym = pygame.Rect(173, 594, 81, 5)
@@ -71,6 +75,9 @@ class Desenha_fundo:
         ]
 
     def desenha_mapa(self, window):
+        '''
+            Função que desenha a imagem do mapa armazenada no init da classe.
+        '''
         # for parede in self.lista_paredes:
         #     pygame.draw.rect(window,PRETO, parede)
         # pygame.draw.rect(window,PRETO, self.porta_gym)

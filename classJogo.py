@@ -15,6 +15,10 @@ from classDesenhaAvisogym import *
 
 class Jogo:
     def __init__(self):
+        '''
+            Classe responsável por armazenar todas as informações necessarias para o funcionamento do jogo,
+            inclusive todos argumentos solicitados pelas funcoes chamadas.
+        '''
         pygame.init()
         pygame.display.set_caption('pokemon-gym')
 
@@ -67,6 +71,12 @@ class Jogo:
         self.aviso_vida = False
 
     def iniciar_jogo(self):
+        '''
+            Função que inicia o jogo, chamando todas as classes e funções necessarias para o funcionamento do jogo
+            verificando a logica de qual tela deve ser desenhada no momento, a função é responsavel tambem por receber
+            todos os inputs, para um melhor entendimento, toda classe/funcao chamada está DOCUMENTADA, e pode ser 
+            explicada por meio de DOCSTRINGS.
+        '''
         desenha_inicio = Inicio()
         desenha_instrucao = Instrucao()
         tela_ilha = Desenha_ilha()

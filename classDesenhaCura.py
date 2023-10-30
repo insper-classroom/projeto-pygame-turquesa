@@ -2,6 +2,10 @@ import pygame
 from constantes import *
 
 class Cura_pokemon():
+    '''
+        Classe responsável por desenhar o pokemon center e entregar as paredes (rects)
+        para realizar a colisão com as paredes.
+    '''
     def __init__(self):
         self.img_box = pygame.transform.scale((pygame.image.load('imgBatalhas/barraVazia.png')),(640, 150))
         self.img_pc = pygame.transform.scale((pygame.image.load('img/pokemonCenter.png')),(640, 400))
@@ -38,6 +42,9 @@ class Cura_pokemon():
         self.mouse = pygame.mouse.get_pos()
 
     def desenha_pc(self, window):
+        '''
+            Função que desenha a imagem do pokemon center armazenada no init da classe.
+        '''
         window.fill((0, 0, 0))
         # pygame.draw.rect(window, PRETO, self.rect_pc)
         # for parede in self.lista_paredes:
@@ -47,6 +54,9 @@ class Cura_pokemon():
         window.blit(self.img_pc, (0, 100))
 
     def desenha_box(self, window):
+        '''
+            Função responsavel pela interacao do personagem com a enfermeira.
+        '''
         window.blit(self.img_box, (0, 450))
         window.blit(self.texto1, (30, 515))
         pygame.draw.rect(window, (188, 188, 188), self.rect_nao)
@@ -55,9 +65,17 @@ class Cura_pokemon():
         window.blit(self.texto_sim, (517, 490))
 
     def verifica_click_sim(self, x, y):
+        '''
+            Função que verifica se o mouse esta em cima do botao de sim, entregue pela funcao 'desenha_pc
+            da classe CuraPokemon'.
+        '''
         if self.rect_sim.collidepoint(x, y):
             return True
         
     def verifica_click_nao(self, x, y):
+        '''
+            Função que verifica se o mouse esta em cima do botao de não, entregue pela funcao 'desenha_pc
+            da classe CuraPokemon'.
+        '''
         if self.rect_nao.collidepoint(x, y):
             return True
