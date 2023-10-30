@@ -31,7 +31,7 @@ class Batalha:
         self.pokemons = [
             {'vida': 290, 'vida_max': 290, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'PIKACHU'},
             {'vida': 250, 'vida_max': 250, 'ataques': [cut, fury_cutter, metal_claw, pursuit], 'nome': 'SCIZOR'},
-            {'vida': 350, 'vida_max': 370, 'ataques': [razor_leaf, sludge_bomb, earthquake, cut], 'nome': 'VENUSAUR'},
+            {'vida': 370, 'vida_max': 370, 'ataques': [razor_leaf, sludge_bomb, earthquake, cut], 'nome': 'VENUSAUR'},
         ]
         self.pokemonatual = 0
         self.botao = 1
@@ -136,9 +136,11 @@ class Batalha:
                         else:
                             self.pokemonatual += 1
             #MORTE DOs POKEMONs DO JOGADOR
-            if self.pokemons[0]["vida"] <= 0 and self.pokemons[1]["vida"] <= 0 and self.pokemons[2]["vida"] <= 0:
+            if self.pokemons[0]["vida"] <= 0 and self.pokemons[1]["vida"] <= 0 and self.pokemons[2]["vida"] <= 0 and self.tela_atual != 'fim':
                 dicionario[self.inimigo_atual]['vida_pokemon'] = dicionario[self.inimigo_atual]['vida_max']
                 self.tela_atual = 'fim'
+                self.inimigo_atual = 0
+                self.pokemonatual = 0
             #MUDA DE TELA QUANDO A LUTA ACABAR
             elif dicionario[self.inimigo_atual]['vida_pokemon'] <= 0:
                 self.tela_atual = 'vitória'

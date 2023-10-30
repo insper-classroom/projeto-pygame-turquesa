@@ -205,8 +205,8 @@ class Jogo:
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         batalha.pokemons[0]['vida'] = 290
-                        batalha.pokemons[1]['vida'] = 270
-                        batalha.pokemons[2]['vida'] = 350
+                        batalha.pokemons[1]['vida'] = 250
+                        batalha.pokemons[2]['vida'] = 370
                     elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 410
@@ -384,40 +384,32 @@ class Jogo:
 
             #Alteração de tela no fim da batalha
             if batalha.tela_atual == 'fim':
-                self.tela_gym_jogo = True
                 if self.treinador_1 == True:
-                    self.bol_batalha1 = True
-                    self.treinador_1 = False
+                    if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                        self.bol_batalha1 = True
+                        self.treinador_1 = False
                     personagem.rect.x = 36
                     personagem.rect.y = 152
                 if self.treinador_2 == True:
-                    self.bol_batalha2 = True
-                    self.treinador_2 = False
+                    if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                        self.bol_batalha2 = True
+                        self.treinador_2 = False
                     personagem.rect.x = 430
                     personagem.rect.y = 454
                 if self.treinador_3 == True:
-                    self.bol_batalha3 = True
-                    self.treinador_3 = False
+                    if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                        self.bol_batalha3 = True
+                        self.treinador_3 = False
                     personagem.rect.x = 72
                     personagem.rect.y = 294
                 if self.treinador_4 == True:
-                    self.bol_batalha4 = True
-                    self.treinador_4 = False
+                    if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
+                        self.bol_batalha4 = True
+                        self.treinador_4 = False
                     personagem.rect.x = 486
                     personagem.rect.y = 132
-                if batalha.pokemons[batalha.pokemonatual]['vida'] > 0:
-                    batalha.tela_atual = 'escolhendo'
-                elif self. bol_batalha1 == True or self. bol_batalha2 == True or self. bol_batalha3 == True or self. bol_batalha4 == True:
-                    self.tela_gym_jogo = True
-                    self.bol_batalha1 = False
-                    self.treinador_1 = False
-                    self.bol_batalha2 = False
-                    self.treinador_2 = False
-                    self.bol_batalha3 = False
-                    self.treinador_3 = False
-                    self.bol_batalha4 = False
-                    self.treinador_4 = False
-                    batalha.tela_atual = 'escolhendo'
+                self.tela_gym_jogo = True
+                batalha.tela_atual = 'escolhendo'
             pygame.display.update()
 
 game = Jogo()
