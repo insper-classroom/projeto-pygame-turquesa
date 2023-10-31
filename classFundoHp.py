@@ -18,8 +18,8 @@ class Telahp():
         self.venusaur_name = self.fonte.render('Venusaur:', True, BRANCO)
         self.pikachu_name = self.fonte.render('Pikachu:', True, BRANCO)
         self.male_symbol = pygame.transform.scale((pygame.image.load('img/male_symbol.png')),(30, 30))
-        self.max1 = self.fonte2.render('/ 270', True, BRANCO)
-        self.max2 = self.fonte2.render('/ 350', True, BRANCO)
+        self.max1 = self.fonte2.render('/ 250', True, BRANCO)
+        self.max2 = self.fonte2.render('/ 370', True, BRANCO)
         self.max3 = self.fonte2.render('/ 290', True, BRANCO)
 
     def desenha(self, window):

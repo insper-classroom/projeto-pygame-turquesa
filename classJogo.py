@@ -12,6 +12,7 @@ from classDesenhainicio import *
 from classDesenhaInstrucao import *
 from classFundoHp import *
 from classDesenhaAvisogym import *
+from classAnimacoes import *
 
 class Jogo:
     def __init__(self):
@@ -36,7 +37,7 @@ class Jogo:
         #Fonte:
         self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 15)
         #INFOS TELA INICIAL:    
-        self.tela_inicio = True
+        self.tela_inicio = False
         self.tela_instrucoes = False
         #INFOS TELA ILHA:
         self.rodando_jogo = True
@@ -49,7 +50,7 @@ class Jogo:
         self.treinador_1 = False
         self.bol_batalha1 = False
         #INFOS TELA BATALHA2:
-        self.treinador_2 = False
+        self.treinador_2 = True
         self.bol_batalha2 = False
         #INFOS TELA BATALHA3:
         self.treinador_3 = False
@@ -102,6 +103,8 @@ class Jogo:
 
         tela_hp = Telahp()
         avisos = Avisos()
+        animacao = Animacao()
+
         while self.rodando_jogo:
             
             #SISTEMA DE MUSICA:
@@ -367,6 +370,11 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
+                animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
+                if animacao.slude_rect.x > 439:
+                    batalha.sludge_bol = False
+                    animacao.slude_rect.x = 160
+                    animacao.slude_rect.y = 330
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
             elif self.treinador_4:
@@ -408,8 +416,13 @@ class Jogo:
                         self.treinador_4 = False
                     personagem.rect.x = 486
                     personagem.rect.y = 132
+                self.treinador_1 = False
+                self.treinador_2 = False
+                self.treinador_3 = False
+                self.treinador_4 = False
                 self.tela_gym_jogo = True
                 batalha.tela_atual = 'escolhendo'
+                
             pygame.display.update()
 
 game = Jogo()

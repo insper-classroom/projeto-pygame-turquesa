@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+from classAnimacoes import *
 class Batalha:
     def __init__(self):
         self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 20)
@@ -40,6 +41,7 @@ class Batalha:
         self.inimigo_atual = 0
         self.efetivo = ''
         self.crit =False
+        self.sludge_bol = False
     def desenha_batalha(self, window, dicionario):
         self.inimigo_atual = 0
         if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 1:
@@ -224,6 +226,8 @@ class Batalha:
             self.tela_atual = 'texto_batalha'
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 2 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
             self.jogador_ataca(dicionario, 1)
+            if self.pokemons[self.pokemonatual]['ataques'][1]['nome'] == 'Sludge Bomb':
+                self.sludge_bol = True
             self.tela_atual = 'texto_batalha'
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 3 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
             self.jogador_ataca(dicionario, 2)
