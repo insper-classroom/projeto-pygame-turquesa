@@ -37,7 +37,7 @@ class Jogo:
         #Fonte:
         self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 15)
         #INFOS TELA INICIAL:    
-        self.tela_inicio = False
+        self.tela_inicio = True
         self.tela_instrucoes = False
         #INFOS TELA ILHA:
         self.rodando_jogo = True
@@ -50,7 +50,7 @@ class Jogo:
         self.treinador_1 = False
         self.bol_batalha1 = False
         #INFOS TELA BATALHA2:
-        self.treinador_2 = True
+        self.treinador_2 = False
         self.bol_batalha2 = False
         #INFOS TELA BATALHA3:
         self.treinador_3 = False
@@ -422,7 +422,7 @@ class Jogo:
                 self.treinador_4 = False
                 self.tela_gym_jogo = True
                 batalha.tela_atual = 'escolhendo'
-                
+
             pygame.display.update()
 
 game = Jogo()

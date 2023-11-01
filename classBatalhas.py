@@ -42,6 +42,8 @@ class Batalha:
         self.efetivo = ''
         self.crit =False
         self.sludge_bol = False
+        self.psybeam = False
+
     def desenha_batalha(self, window, dicionario):
         self.inimigo_atual = 0
         if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 1:

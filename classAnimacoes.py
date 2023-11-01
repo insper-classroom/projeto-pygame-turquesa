@@ -12,7 +12,8 @@ class Animacao():
         self.slude_rect.topleft = (self.slude_x, self.slude_y)
         self.slud_counter = 0
         self.slud_animation_counter = 3
-        #outro ataque aqui
+        #infos para Psybeam
+
     def movimenta_slude(self):
         self.slud_counter += 1
         if self.slud_counter == self.slud_animation_counter:
