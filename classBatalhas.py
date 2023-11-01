@@ -18,21 +18,21 @@ class Batalha:
             pygame.transform.scale((pygame.image.load('img/scizor.png')),(200,200)),
             pygame.transform.scale((pygame.image.load('img/venusaur.png')),(200,200)),
         ]
-        tackle = {'dano': 35, 'precisao': 100, 'tipo': 'normal', 'pps': 30, 'nome': 'Tackle'}
+        tackle = {'dano': 35, 'precisao': 100, 'tipo': 'normal', 'pps': 20, 'nome': 'Tackle'}
         facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
-        slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 35, 'nome': 'Slam'}
-        thunderbolt = {'dano': 60, 'precisao': 100, 'tipo': 'eletrico', 'pps': 35, 'nome': 'Thunderbolt'}
-        cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 20, 'nome': 'Cut'}
-        fury_cutter = {'dano': 80, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
-        metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 30, 'nome': 'Metal Claw'}
+        slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 5, 'nome': 'Slam'}
+        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps': 15, 'nome': 'Thunderbolt'}
+        cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'nome': 'Cut'}
+        fury_cutter = {'dano': 10, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
+        metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 10, 'nome': 'Metal Claw'}
         pursuit = {'dano': 60, 'precisao': 100, 'tipo': 'escuridao', 'pps': 20, 'nome': 'Pursuit'}
         sludge_bomb = {'dano': 40, 'precisao': 100, 'tipo': 'veneno', 'pps': 10, 'nome': 'Sludge Bomb'}
-        razor_leaf = {'dano': 50, 'precisao': 95, 'tipo': 'grama', 'pps': 25, 'nome': 'Razor Leaf'}
-        earthquake = {'dano': 55, 'precisao': 100, 'tipo': 'terra', 'pps': 10, 'nome': 'Earthquake'}
+        razor_leaf = {'dano': 40, 'precisao': 95, 'tipo': 'grama', 'pps': 15, 'nome': 'Razor Leaf'}
+        earthquake = {'dano': 55, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'nome': 'Earthquake'}
         self.pokemons = [
             {'vida': 290, 'vida_max': 290, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'PIKACHU'},
             {'vida': 250, 'vida_max': 250, 'ataques': [cut, fury_cutter, metal_claw, pursuit], 'nome': 'SCIZOR'},
-            {'vida': 370, 'vida_max': 370, 'ataques': [razor_leaf, sludge_bomb, earthquake, cut], 'nome': 'VENUSAUR'},
+            {'vida': 330, 'vida_max': 330, 'ataques': [razor_leaf, sludge_bomb, earthquake, cut], 'nome': 'VENUSAUR'},
         ]
         self.pokemonatual = 0
         self.botao = 1
@@ -40,15 +40,18 @@ class Batalha:
         self.tela_atual = 'escolhendo'
         self.inimigo_atual = 0
         self.efetivo = ''
+        self.fury_cutter = False
         self.crit =False
         self.sludge_bol = False
         self.thunder_bol = False
+        self.tackle_bol = False
     def desenha_batalha(self, window, dicionario):
-        self.inimigo_atual = 0
-        if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 1:
-            self.inimigo_atual += 1
-        if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 2:
-            self.inimigo_atual += 1
+        if self.tela_atual != 'animando':
+            self.inimigo_atual = 0
+            if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 1:
+                self.inimigo_atual += 1
+            if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 2:
+                self.inimigo_atual += 1
         #EVITA VIDA NEGATIVA
         if dicionario[self.inimigo_atual]['vida_pokemon'] < 0:
             dicionario[self.inimigo_atual]['vida_pokemon'] = 0
@@ -67,7 +70,7 @@ class Batalha:
         blit_jogador = self.fonte.render(f'{self.pokemons[self.pokemonatual]["nome"]}: {self.pokemons[self.pokemonatual]["vida"]}/{self.pokemons[self.pokemonatual]["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_jogador, (350, 310))
         #PARA DE DESENHAR O POKEMON INIMIGO SE ELE MORRER
-        if dicionario[self.inimigo_atual]['vida_pokemon'] > 0:
+        if dicionario[self.inimigo_atual]['vida_pokemon'] >= 0 or self.tela_atual == 'animando':
             window.blit(dicionario[self.inimigo_atual]['imagem'], (370, 130))
         #DESENHA O ATAQUE DO JOGADO
         if self.tela_atual == 'animando':
@@ -148,6 +151,7 @@ class Batalha:
                 self.tela_atual = 'fim'
                 self.inimigo_atual = 0
                 self.pokemonatual = 0
+                self.pokemons[1]['ataques'][ataque]['dano'] = 10
             #MUDA DE TELA QUANDO A LUTA ACABAR
             elif dicionario[self.inimigo_atual]['vida_pokemon'] <= 0:
                 self.tela_atual = 'vitória'
@@ -208,6 +212,7 @@ class Batalha:
             pygame.display.update()
             time.sleep(1)
             self.tela_atual = 'fim'
+            self.pokemons[1]['ataques'][ataque]['dano'] = 10
         self.inimigo_compara = dicionario[self.inimigo_atual]['vida_max']
         self.efetivo = ''
         self.crit = False
@@ -233,24 +238,28 @@ class Batalha:
         #UTILIZA O ATAQUE PRESIONADO
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 1 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
             self.jogador_ataca(dicionario, 0)
-            self.tela_atual = 'texto_batalha'
+            self.animacao_ataques(0)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 2 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
             self.jogador_ataca(dicionario, 1)
-            if self.pokemons[self.pokemonatual]['ataques'][1]['nome'] == 'Sludge Bomb':
+            self.animacao_ataques(1)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 3 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
+            self.jogador_ataca(dicionario, 2)
+            self.animacao_ataques(2)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 4 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
+            self.jogador_ataca(dicionario, 3)
+            self.animacao_ataques(3)
+    def animacao_ataques(self, num):
+            if self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Sludge Bomb':
                 self.sludge_bol = True
                 self.tela_atual = 'animando'
-            elif self.pokemons[self.pokemonatual]['ataques'][1]['nome'] == 'Thunderbolt':
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Thunderbolt':
                 self.thunder_bol = True
+                self.tela_atual = 'animando'
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Tackle':
+                self.tackle_bol = True
                 self.tela_atual = 'animando'
             else:
                 self.tela_atual = 'texto_batalha'
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 3 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
-            self.jogador_ataca(dicionario, 2)
-            self.tela_atual = 'texto_batalha'
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 4 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
-            self.jogador_ataca(dicionario, 3)
-            self.tela_atual = 'texto_batalha'
-
     def inimigo_ataca(self,dicionario):
         #LÓGICA DE BATALHA DOS INIMIGOS
         crit = False
@@ -286,13 +295,13 @@ class Batalha:
                 efetivo = 'super'
         elif dicionario[self.inimigo_atual]['nome'] == 'MEDICHAM':
             if dicionario[self.inimigo_atual]['vida_pokemon'] < 130:
-                if probab < 0.8:
+                if probab < 0.75:
                     dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
                     nome = dicionario[self.inimigo_atual]['ataques'][0]['nome']
                 else:
                     dano = dicionario[self.inimigo_atual]['ataques'][2]['dano']
                     nome = dicionario[self.inimigo_atual]['ataques'][2]['nome']
-                    dicionario[self.inimigo_atual]['vida_pokemon'] += 120
+                    dicionario[self.inimigo_atual]['vida_pokemon'] += 140
             else:
                 if probab < 0.65:
                     dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
@@ -311,7 +320,7 @@ class Batalha:
                 efetivo = 'super'
             elif self.pokemons[self.pokemonatual]['nome'] == 'SCIZOR' and nome == 'Psybeam':
                 dano //= 2
-                efetivo = 'super'
+                efetivo = 'not'
         elif dicionario[self.inimigo_atual]['nome'] == 'MACHOP':
             dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
             nome = dicionario[self.inimigo_atual]['ataques'][0]['nome']
@@ -374,8 +383,13 @@ class Batalha:
         self.crit = random.random()
         qual_ataque = self.pokemons[self.pokemonatual]['ataques'][ataque]
         dano = qual_ataque['dano']
+        if self.pokemons[self.pokemonatual]['ataques'][ataque]['nome'] == 'Fury Cutter':
+            if self.pokemons[self.pokemonatual]['ataques'][ataque]['dano'] < 160:
+                self.pokemons[self.pokemonatual]['ataques'][ataque]['dano'] *= 2
+        else:
+            self.pokemons[1]['ataques'][ataque]['dano'] = 10
         if qual_ataque['tipo'] == 'escuridao':
-            if dicionario[self.inimigo_atual]['nome'] != 'MEDITITE' or dicionario[self.inimigo_atual]['nome'] != 'MEDICHAM':
+            if dicionario[self.inimigo_atual]['nome'] != 'MEDITITE' and dicionario[self.inimigo_atual]['nome'] != 'MEDICHAM':
                 dano //= 2
                 self.efetivo = 'not'
         elif qual_ataque['tipo'] == 'grama':
@@ -387,7 +401,7 @@ class Batalha:
                 dano //= 2
                 self.efetivo = 'not'
         elif qual_ataque['tipo'] == 'inseto':
-            if dicionario[self.inimigo_atual]['nome'] != 'MEDITITE' or dicionario[self.inimigo_atual]['nome'] != 'MEDICHAM':
+            if dicionario[self.inimigo_atual]['nome'] != 'MEDITITE' and dicionario[self.inimigo_atual]['nome'] != 'MEDICHAM':
                 dano //= 2
                 self.efetivo = 'not'
         if self.crit <= 0.0416:

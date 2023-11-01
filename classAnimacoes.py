@@ -8,6 +8,9 @@ class Animacao():
         #infos para o ataque sludge
         self.slude = pygame.transform.scale((pygame.image.load('img/sluge.jpeg')),(30, 30))
         self.thunder = pygame.transform.scale((pygame.image.load('img/Thunderboltsprite.png')), (30,110))
+        self.tackle = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (60,60))
+        self.tackle_mini = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (30,30))
+        self.tackle_cont = 0
         self.slude_x = 160
         self.slude_y = 330
         self.thunder_rect_x = 385
@@ -17,6 +20,8 @@ class Animacao():
         self.thunder_counter = 0
         self.slud_animation_counter = 3
         self.thunder_animation_counter = 12
+        self.tackle_counter = 0
+        self.tackle_animation_counter = 6
         #outro ataque aqui
     def movimenta_slude(self):
         self.slud_counter += 1
@@ -43,5 +48,13 @@ class Animacao():
             self.movimenta_thunder()
             window.blit(self.thunder, (self.thunder_rect_x, 150))
 
-            
-        
+    def desenha_tackle(self, window, bool):
+        if bool:
+            if self.tackle_cont == 2:
+                window.blit(self.tackle_mini, (440, 235))
+            else:
+                window.blit(self.tackle, (425, 220))
+            self.tackle_counter += 1
+            if self.tackle_counter == self.tackle_animation_counter:
+                self.tackle_counter = 0
+                self.tackle_cont += 1

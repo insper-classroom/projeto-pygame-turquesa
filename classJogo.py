@@ -368,8 +368,8 @@ class Jogo:
 
             elif self.treinador_1:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
-                animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
-                animacao.desenha_thunder(self.windowt2, batalha.thunder_bol)
+                animacao.desenha_slude(self.windowt1, batalha.sludge_bol)
+                animacao.desenha_thunder(self.windowt1, batalha.thunder_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -379,6 +379,12 @@ class Jogo:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                elif batalha.tackle_bol == True:
+                    animacao.desenha_tackle(self.windowt1, batalha.tackle_bol)
+                    if animacao.tackle_cont * 3 > 9:
+                        batalha.tackle_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.tackle_cont = 0
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
                 animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
@@ -392,10 +398,17 @@ class Jogo:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                    animacao.tackle_cont = 0
+                elif batalha.tackle_bol == True:
+                    animacao.desenha_tackle(self.windowt2, batalha.tackle_bol)
+                    if animacao.tackle_cont * 3 > 9:
+                        batalha.tackle_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.tackle_cont = 0
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
-                animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
-                animacao.desenha_thunder(self.windowt2, batalha.thunder_bol)
+                animacao.desenha_slude(self.windowt3, batalha.sludge_bol)
+                animacao.desenha_thunder(self.windowt3, batalha.thunder_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -405,10 +418,16 @@ class Jogo:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                elif batalha.tackle_bol == True:
+                    animacao.desenha_tackle(self.windowt3, batalha.tackle_bol)
+                    if animacao.tackle_cont * 3 > 9:
+                        batalha.tackle_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.tackle_cont = 0
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
-                animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
-                animacao.desenha_thunder(self.windowt2, batalha.thunder_bol)
+                animacao.desenha_slude(self.windowt4, batalha.sludge_bol)
+                animacao.desenha_thunder(self.windowt4, batalha.thunder_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -418,7 +437,12 @@ class Jogo:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
-
+                elif batalha.tackle_bol == True:
+                    animacao.desenha_tackle(self.windowt4, batalha.tackle_bol)
+                    if animacao.tackle_cont * 3 > 9:
+                        batalha.tackle_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.tackle_cont = 0
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
                 vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)
