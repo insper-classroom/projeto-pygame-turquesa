@@ -42,8 +42,7 @@ class Batalha:
         self.efetivo = ''
         self.crit =False
         self.sludge_bol = False
-        self.psybeam = False
-
+        self.thunder_bol = False
     def desenha_batalha(self, window, dicionario):
         self.inimigo_atual = 0
         if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 1:
@@ -62,16 +61,19 @@ class Batalha:
         window.blit(self.lista_imagens[2], (310, 290))
         window.blit(self.lista_imagens[1], (290, 230))
         window.blit(self.lista_imagens[6 + self.pokemonatual], (30, 300))
-        #PARA DE DESENHAR O POKEMON INIMIGO SE ELE MORRER
-        if dicionario[self.inimigo_atual]['vida_pokemon'] > 0:
-            window.blit(dicionario[self.inimigo_atual]['imagem'], (370, 130))
         #DESENHA A VIDA DOS POKEMONS
         blit_inimigo = self.fonte.render(f'{dicionario[self.inimigo_atual]["nome"]}: {dicionario[self.inimigo_atual]["vida_pokemon"]}/{dicionario[self.inimigo_atual]["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_inimigo, (80, 115))
         blit_jogador = self.fonte.render(f'{self.pokemons[self.pokemonatual]["nome"]}: {self.pokemons[self.pokemonatual]["vida"]}/{self.pokemons[self.pokemonatual]["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_jogador, (350, 310))
-        #DESENHA O ATAQUE DO JOGADOR
-        if self.tela_atual == 'texto_batalha':
+        #PARA DE DESENHAR O POKEMON INIMIGO SE ELE MORRER
+        if dicionario[self.inimigo_atual]['vida_pokemon'] > 0:
+            window.blit(dicionario[self.inimigo_atual]['imagem'], (370, 130))
+        #DESENHA O ATAQUE DO JOGADO
+        if self.tela_atual == 'animando':
+            window.blit(self.lista_imagens[4], (0, 450))
+        #ESCREVE O TEXTO DA BATALHA
+        elif self.tela_atual == 'texto_batalha':
             window.blit(self.lista_imagens[4], (0, 450))
             ataque = self.fonteBatalha.render(f"{self.pokemons[self.pokemonatual]['nome']} used {self.pokemons[self.pokemonatual]['ataques'][self.botao - 1]['nome']}!", True, (0,0,0))
             window.blit(ataque, (50, 475))
@@ -122,6 +124,7 @@ class Batalha:
                     window.blit(crit, (50, 475))
                     pygame.display.update()
                     time.sleep(1)
+            #ATUALIZA A MORTE DO JOGADOR E TENTA TROCAR DE POKEMON
             if self.pokemons[self.pokemonatual]['vida'] <= 0:
                 if self.pokemons[self.pokemonatual]['vida'] < 0:
                     self.pokemons[self.pokemonatual]['vida'] = 0
@@ -151,6 +154,7 @@ class Batalha:
             else:
                 self.tela_atual = 'escolhendo'
                 self.botao = 1
+        #TELA DE ESCOLHA DA BATALHA
         elif self.tela_atual == 'escolhendo':
             window.blit(self.lista_imagens[4], (0, 450))
             text_menu = self.fonteMenu.render('FIGHT', True, (0, 0, 0))
@@ -161,6 +165,7 @@ class Batalha:
                 window.blit(self.lista_imagens[3], (40, 505))
             if self.botao == 2:
                 window.blit(self.lista_imagens[3], (290, 505))
+        #ESCREVE OS ATAQUES DO JOGADOR
         elif self.tela_atual == 'batalha':
             window.blit(self.lista_imagens[0], (0, 450))
             ataque1 = self.fonteBatalha.render(self.pokemons[self.pokemonatual]['ataques'][0]['nome'], True, (0,0,0))
@@ -195,6 +200,7 @@ class Batalha:
                 pps = self.pokemons[self.pokemonatual]['ataques'][3]['pps']
                 pps = self.fonteBatalha.render(f'{pps}', True, (0,0,0))
                 window.blit(pps, (520, 475))
+        #FINALIZA A BATALHA
         elif self.tela_atual =='vitória':
             window.blit(self.lista_imagens[4], (0, 450))
             morte = self.fonteBatalha.render(f"Foe {dicionario[self.inimigo_atual]['nome']} Fainted!", True, (0,0,0))
@@ -207,6 +213,7 @@ class Batalha:
         self.crit = False
 
     def botoes_batalha(self, event, dicionario, window):
+        #MOVE A SETA INDICANDO O ATAQUE SELECIONADO
         if event.type == pygame.KEYDOWN and self.botao == 1 and event.key == pygame.K_RIGHT:
             self.botao = 2
         elif event.type == pygame.KEYDOWN and self.botao == 1 and event.key == pygame.K_DOWN:
@@ -223,6 +230,7 @@ class Batalha:
             self.botao = 3
         elif event.type == pygame.KEYDOWN and self.botao == 4 and event.key == pygame.K_UP:
             self.botao = 1
+        #UTILIZA O ATAQUE PRESIONADO
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 1 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
             self.jogador_ataca(dicionario, 0)
             self.tela_atual = 'texto_batalha'
@@ -230,7 +238,12 @@ class Batalha:
             self.jogador_ataca(dicionario, 1)
             if self.pokemons[self.pokemonatual]['ataques'][1]['nome'] == 'Sludge Bomb':
                 self.sludge_bol = True
-            self.tela_atual = 'texto_batalha'
+                self.tela_atual = 'animando'
+            elif self.pokemons[self.pokemonatual]['ataques'][1]['nome'] == 'Thunderbolt':
+                self.thunder_bol = True
+                self.tela_atual = 'animando'
+            else:
+                self.tela_atual = 'texto_batalha'
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.botao == 3 and self.pokemons[self.pokemonatual]['ataques'][0]['pps'] > 0:
             self.jogador_ataca(dicionario, 2)
             self.tela_atual = 'texto_batalha'
@@ -239,6 +252,7 @@ class Batalha:
             self.tela_atual = 'texto_batalha'
 
     def inimigo_ataca(self,dicionario):
+        #LÓGICA DE BATALHA DOS INIMIGOS
         crit = False
         probab = random.random()
         efetivo = ''
@@ -356,6 +370,7 @@ class Batalha:
         return int(dano), nome, efetivo, crit
     
     def jogador_ataca(self, dicionario, ataque):
+        #ALTERA O DANO DO ATAQUE SE ALGUMAS CONDIÇÕES FOREM VERDADEIRAS
         self.crit = random.random()
         qual_ataque = self.pokemons[self.pokemonatual]['ataques'][ataque]
         dano = qual_ataque['dano']
@@ -380,3 +395,4 @@ class Batalha:
             self.crit = True
         dicionario[self.inimigo_atual]['vida_pokemon'] -= int(dano)
         self.pokemons[self.pokemonatual]['ataques'][ataque]['pps'] -= 1
+
