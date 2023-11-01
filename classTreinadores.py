@@ -7,15 +7,15 @@ class Treinador1:
         self.psybeam = {'dano': 65, 'precisao': 100, 'tipo': 'psiquico', 'nome': 'Psybeam'}
         self.recover = {'dano': 0, 'nome': 'Recover'}
         self.karate_chop = {'dano': 50, 'precisao': 100, 'tipo': 'lutador', 'nome': 'Karate Chop'}
-        self.medicham = pygame.transform.scale((pygame.image.load('img/medicham.png')),(150,150))
-        self.machop = pygame.transform.scale((pygame.image.load('img/Machop.webp')),(150,150))
+        self.medicham = pygame.transform.scale((pygame.image.load('img/medicham.png')),(180,180))
+        self.machop = pygame.transform.scale((pygame.image.load('img/Machop.webp')),(160,160))
     
     def desenha_treinador1(self, window, bool):
         if not bool:
             window.blit(self.treinador1_img, (35, 185))
         
     def pokemons_treinador1(self):
-        treinador1 = [{'vida_pokemon': 260, 'vida_max': 260, 'ataques': [self.fire_punch, self.psybeam, self.recover], 'nome': 'MEDICHAM', 'imagem': self.medicham},
+        treinador1 = [{'vida_pokemon': 280, 'vida_max': 280, 'ataques': [self.fire_punch, self.psybeam, self.recover], 'nome': 'MEDICHAM', 'imagem': self.medicham},
                       {'vida_pokemon': 240, 'vida_max': 240, 'ataques': [self.karate_chop], 'nome': 'MACHOP', 'imagem': self.machop}]
         return treinador1
 
@@ -41,8 +41,8 @@ class Treinardor3:
         self.karate_chop = {'dano': 50, 'precisao': 100, 'tipo': 'lutador', 'nome': 'Karate Chop'}
         self.facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'nome': 'Facade'}
         self.psybeam = {'dano': 65, 'precisao': 100, 'tipo': 'psiquico', 'nome': 'Psybeam'}
-        self.meditite = pygame.transform.scale((pygame.image.load('img/Meditite.webp')),(150,150))
-        self.machoke = pygame.transform.scale((pygame.image.load('img/machoke.png')),(150,150))
+        self.meditite = pygame.transform.scale((pygame.image.load('img/Meditite.webp')),(180,180))
+        self.machoke = pygame.transform.scale((pygame.image.load('img/machoke.png')),(180,180))
 
     def desenha_treinador3(self, window, bool):
         if not bool:
