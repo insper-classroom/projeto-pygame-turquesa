@@ -385,6 +385,12 @@ class Jogo:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.tackle_cont = 0
+                elif batalha.cut_bol == True:
+                    animacao.desenha_cut(self.windowt1, batalha.cut_bol)
+                    if animacao.cut_cont * 4 > 20:
+                        batalha.cut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.cut_cont = 0
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
                 animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
@@ -405,6 +411,12 @@ class Jogo:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.tackle_cont = 0
+                elif batalha.cut_bol == True:
+                    animacao.desenha_cut(self.windowt2, batalha.cut_bol)
+                    if animacao.cut_cont * 4 > 20:
+                        batalha.cut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.cut_cont = 0
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
                 animacao.desenha_slude(self.windowt3, batalha.sludge_bol)
@@ -424,6 +436,12 @@ class Jogo:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.tackle_cont = 0
+                elif batalha.cut_bol == True:
+                    animacao.desenha_cut(self.windowt3, batalha.cut_bol)
+                    if animacao.cut_cont * 4 > 20:
+                        batalha.cut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.cut_cont = 0
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
                 animacao.desenha_slude(self.windowt4, batalha.sludge_bol)
@@ -443,6 +461,12 @@ class Jogo:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.tackle_cont = 0
+                elif batalha.cut_bol == True:
+                    animacao.desenha_cut(self.windowt4, batalha.cut_bol)
+                    if animacao.cut_cont * 4 > 20:
+                        batalha.cut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.cut_cont = 0
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
                 vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)

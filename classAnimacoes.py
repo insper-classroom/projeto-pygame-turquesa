@@ -9,8 +9,13 @@ class Animacao():
         self.slude = pygame.transform.scale((pygame.image.load('img/sluge.jpeg')),(30, 30))
         self.thunder = pygame.transform.scale((pygame.image.load('img/Thunderboltsprite.png')), (30,110))
         self.tackle = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (60,60))
+        self.cut1 = pygame.transform.scale((pygame.image.load('img/Cut1.png')), (100,100))
+        self.cut2 = pygame.transform.scale((pygame.image.load('img/Cut2.png')), (100,100))
+        self.cut3 = pygame.transform.scale((pygame.image.load('img/Cut3.png')), (100,100))
+        self.cut4 = pygame.transform.scale((pygame.image.load('img/Cut4.png')), (100,100))
         self.tackle_mini = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (30,30))
         self.tackle_cont = 0
+        self.cut_cont = 0
         self.slude_x = 160
         self.slude_y = 330
         self.thunder_rect_x = 385
@@ -22,6 +27,8 @@ class Animacao():
         self.thunder_animation_counter = 12
         self.tackle_counter = 0
         self.tackle_animation_counter = 6
+        self.cut_counter = 0
+        self.cut_animation_counter = 5
         #outro ataque aqui
     def movimenta_slude(self):
         self.slud_counter += 1
@@ -58,3 +65,18 @@ class Animacao():
             if self.tackle_counter == self.tackle_animation_counter:
                 self.tackle_counter = 0
                 self.tackle_cont += 1
+
+    def desenha_cut(self, window, bool):
+        if bool:
+            if self.cut_cont == 1:
+                window.blit(self.cut1, (425, 190))
+            elif self.cut_cont == 2:
+                window.blit(self.cut2, (425, 190))
+            elif self.cut_cont == 3:
+                window.blit(self.cut3, (425, 190))
+            elif self.cut_cont == 4:
+                window.blit(self.cut4, (425, 190))
+            self.cut_counter += 1
+            if self.cut_counter == self.cut_animation_counter:
+                self.cut_counter = 0
+                self.cut_cont += 1

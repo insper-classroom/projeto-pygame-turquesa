@@ -45,6 +45,7 @@ class Batalha:
         self.sludge_bol = False
         self.thunder_bol = False
         self.tackle_bol = False
+        self.cut_bol = False
     def desenha_batalha(self, window, dicionario):
         if self.tela_atual != 'animando':
             self.inimigo_atual = 0
@@ -212,7 +213,7 @@ class Batalha:
             pygame.display.update()
             time.sleep(1)
             self.tela_atual = 'fim'
-            self.pokemons[1]['ataques'][ataque]['dano'] = 10
+            self.pokemons[1]['ataques'][2]['dano'] = 10
         self.inimigo_compara = dicionario[self.inimigo_atual]['vida_max']
         self.efetivo = ''
         self.crit = False
@@ -257,6 +258,9 @@ class Batalha:
                 self.tela_atual = 'animando'
             elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Tackle':
                 self.tackle_bol = True
+                self.tela_atual = 'animando'
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Cut':
+                self.cut_bol = True
                 self.tela_atual = 'animando'
             else:
                 self.tela_atual = 'texto_batalha'
