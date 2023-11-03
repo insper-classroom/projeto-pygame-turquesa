@@ -209,7 +209,7 @@ class Jogo:
                     if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         batalha.pokemons[0]['vida'] = 290
                         batalha.pokemons[1]['vida'] = 250
-                        batalha.pokemons[2]['vida'] = 370
+                        batalha.pokemons[2]['vida'] = 330
                     elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 410
@@ -237,25 +237,26 @@ class Jogo:
                         batalha.botoes_batalha(event, dicionario3, self.windowt3)
                     elif self.treinador_4:
                         batalha.botoes_batalha(event, dicionario4, self.windowt4)
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 1:
-                    batalha.tela_atual = 'batalha'
-                    batalha.botao = 1
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
-                    batalha.tela_atual = 'escolhendo'
-                    batalha. botao = 1
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 2 and batalha.tela_atual == 'escolhendo':
-                    if batalha.pokemonatual == 0 and batalha.pokemons[1]['vida'] <= 0 and batalha.pokemons[2]['vida'] > 0:
-                        batalha.pokemonatual = 2
-                    elif batalha. pokemons[1]['vida'] > 0 and batalha.pokemonatual == 0:
-                        batalha.pokemonatual = 1
-                    elif batalha.pokemonatual == 1 and batalha.pokemons[2]['vida'] <= 0 and batalha.pokemons[0]['vida'] > 0:
-                        batalha.pokemonatual = 0
-                    elif batalha.pokemons[2]['vida'] > 0 and batalha.pokemonatual == 1:
-                        batalha.pokemonatual = 2
-                    elif batalha.pokemonatual == 2 and batalha.pokemons[0]['vida'] <= 0 and batalha.pokemons[1]['vida'] > 0:
-                        batalha.pokemonatual = 1
-                    elif batalha.pokemons[0]['vida'] > 0 and batalha.pokemonatual == 2:
-                        batalha.pokemonatual = 0
+                if batalha.tela_atual != 'animando' or batalha.tela_atual != 'texto_batalha':
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 1 and batalha.atacou == False:
+                        batalha.tela_atual = 'batalha'
+                        batalha.botao = 1
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':
+                        batalha.tela_atual = 'escolhendo'
+                        batalha.botao = 1
+                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 2 and batalha.tela_atual == 'escolhendo':
+                        if batalha.pokemonatual == 0 and batalha.pokemons[1]['vida'] <= 0 and batalha.pokemons[2]['vida'] > 0:
+                            batalha.pokemonatual = 2
+                        elif batalha. pokemons[1]['vida'] > 0 and batalha.pokemonatual == 0:
+                            batalha.pokemonatual = 1
+                        elif batalha.pokemonatual == 1 and batalha.pokemons[2]['vida'] <= 0 and batalha.pokemons[0]['vida'] > 0:
+                            batalha.pokemonatual = 0
+                        elif batalha.pokemons[2]['vida'] > 0 and batalha.pokemonatual == 1:
+                            batalha.pokemonatual = 2
+                        elif batalha.pokemonatual == 2 and batalha.pokemons[0]['vida'] <= 0 and batalha.pokemons[1]['vida'] > 0:
+                            batalha.pokemonatual = 1
+                        elif batalha.pokemons[0]['vida'] > 0 and batalha.pokemonatual == 2:
+                            batalha.pokemonatual = 0
 
             #verifica colisao no ginasio
             if not personagem.verifica_colisao(tela_gym.lista_paredes):
@@ -370,6 +371,7 @@ class Jogo:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
                 animacao.desenha_slude(self.windowt1, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt1, batalha.thunder_bol)
+                animacao.desenha_leaf(self.windowt1, batalha.leaf_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -391,10 +393,16 @@ class Jogo:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.cut_cont = 0
+                elif animacao.leaf_rect.x > 439:
+                    batalha.leaf_bol = False
+                    animacao.leaf_rect.x = 160
+                    animacao.leaf_rect.y = 330
+                    batalha.tela_atual = 'texto_batalha'
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
                 animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt2, batalha.thunder_bol)
+                animacao.desenha_leaf(self.windowt2, batalha.leaf_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -417,10 +425,16 @@ class Jogo:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.cut_cont = 0
+                elif animacao.leaf_rect.x > 439:
+                    batalha.leaf_bol = False
+                    animacao.leaf_rect.x = 160
+                    animacao.leaf_rect.y = 330
+                    batalha.tela_atual = 'texto_batalha'
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
                 animacao.desenha_slude(self.windowt3, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt3, batalha.thunder_bol)
+                animacao.desenha_leaf(self.windowt3, batalha.leaf_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -442,10 +456,16 @@ class Jogo:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.cut_cont = 0
+                elif animacao.leaf_rect.x > 439:
+                    batalha.leaf_bol = False
+                    animacao.leaf_rect.x = 160
+                    animacao.leaf_rect.y = 330
+                    batalha.tela_atual = 'texto_batalha'
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
                 animacao.desenha_slude(self.windowt4, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt4, batalha.thunder_bol)
+                animacao.desenha_leaf(self.windowt4, batalha.leaf_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -467,6 +487,11 @@ class Jogo:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
                         animacao.cut_cont = 0
+                elif animacao.leaf_rect.x > 439:
+                    batalha.leaf_bol = False
+                    animacao.leaf_rect.x = 160
+                    animacao.leaf_rect.y = 330
+                    batalha.tela_atual = 'texto_batalha'
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
                 vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)

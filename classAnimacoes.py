@@ -7,6 +7,7 @@ class Animacao():
         self.rect_para_att = pygame.Rect(409, 167, 3, 120)
         #infos para o ataque sludge
         self.slude = pygame.transform.scale((pygame.image.load('img/sluge.jpeg')),(30, 30))
+        self.leaf = pygame.transform.scale((pygame.image.load('img/leaf_2.png')),(80, 80))
         self.thunder = pygame.transform.scale((pygame.image.load('img/Thunderboltsprite.png')), (30,110))
         self.tackle = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (60,60))
         self.cut1 = pygame.transform.scale((pygame.image.load('img/Cut1.png')), (100,100))
@@ -18,10 +19,16 @@ class Animacao():
         self.cut_cont = 0
         self.slude_x = 160
         self.slude_y = 330
+        self.leaf_x = 160
+        self.leaf_y = 330
         self.thunder_rect_x = 385
         self.slude_rect = self.slude.get_rect()
         self.slude_rect.topleft = (self.slude_x, self.slude_y)
         self.slud_counter = 0
+        self.leaf_rect = self.slude.get_rect()
+        self.leaf_rect.topleft = (self.leaf_x, self.leaf_y)
+        self.leaf_counter = 0
+        self.leaf_animation_counter = 3
         self.thunder_counter = 0
         self.slud_animation_counter = 3
         self.thunder_animation_counter = 12
@@ -80,3 +87,16 @@ class Animacao():
             if self.cut_counter == self.cut_animation_counter:
                 self.cut_counter = 0
                 self.cut_cont += 1
+    def movimenta_leaf(self):
+        self.leaf_counter += 1
+        if self.leaf_counter == self.leaf_animation_counter:
+            self.leaf_counter = 0
+            self.leaf_rect.x += 25
+            self.leaf_rect.y -= 13
+    def desenha_leaf(self, window, bool):
+        if bool:
+            self.movimenta_leaf()
+            window.blit(self.leaf, (self.leaf_rect.x, self.leaf_rect.y))
+        if self.leaf_rect.x > 439:
+            self.leaf_x = 160
+            self.leaf_y = 330
