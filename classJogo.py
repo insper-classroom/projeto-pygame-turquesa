@@ -583,7 +583,6 @@ class Jogo:
                 self.treinador_4 = False
                 self.tela_gym_jogo = True
                 batalha.tela_atual = 'escolhendo'
-            print(pygame.mouse.get_pos())
 
             pygame.display.update()
 
