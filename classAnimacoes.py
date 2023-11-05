@@ -14,9 +14,21 @@ class Animacao():
         self.cut2 = pygame.transform.scale((pygame.image.load('img/Cut2.png')), (100,100))
         self.cut3 = pygame.transform.scale((pygame.image.load('img/Cut3.png')), (100,100))
         self.cut4 = pygame.transform.scale((pygame.image.load('img/Cut4.png')), (100,100))
+        self.slam1 = pygame.transform.scale((pygame.image.load('img/Slam1.png')), (100,100))
+        self.slam2 = pygame.transform.scale((pygame.image.load('img/Slam2.png')), (100,100))
+        self.slam3 = pygame.transform.scale((pygame.image.load('img/Slam3.png')), (100,100))
+        self.slam4 = pygame.transform.scale((pygame.image.load('img/Slam4.png')), (100,100))
+        self.slam5 = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (135,135))
+        self.facade1 = pygame.transform.scale((pygame.image.load('img/Facade1.png')), (100,100))
+        self.facade2 = pygame.transform.scale((pygame.image.load('img/Facade2.png')), (100,100))
+        self.facade3 = pygame.transform.scale((pygame.image.load('img/Facade3.png')), (100,100))
+        self.facade4 = pygame.transform.scale((pygame.image.load('img/Facade4.png')), (100,100))
+        self.facade5 = pygame.transform.scale((pygame.image.load('img/Facade5.png')), (100,100))
         self.tackle_mini = pygame.transform.scale((pygame.image.load('img/Tackle.png')), (30,30))
         self.tackle_cont = 0
         self.cut_cont = 0
+        self.slam_cont = 0
+        self.facade_cont = 0
         self.slude_x = 160
         self.slude_y = 330
         self.leaf_x = 160
@@ -36,6 +48,10 @@ class Animacao():
         self.tackle_animation_counter = 6
         self.cut_counter = 0
         self.cut_animation_counter = 5
+        self.slam_counter = 0
+        self.slam_animation_counter = 4
+        self.facade_counter = 0
+        self.facade_animation_counter = 4
         #outro ataque aqui
     def movimenta_slude(self):
         self.slud_counter += 1
@@ -87,6 +103,39 @@ class Animacao():
             if self.cut_counter == self.cut_animation_counter:
                 self.cut_counter = 0
                 self.cut_cont += 1
+    def desenha_slam(self, window, bool):
+        if bool:
+            if self.slam_cont == 1:
+                window.blit(self.slam1, (405, 170))
+            elif self.slam_cont == 2:
+                window.blit(self.slam2, (405, 170))
+            elif self.slam_cont == 3:
+                window.blit(self.slam3, (405, 170))
+            elif self.slam_cont == 4:
+                window.blit(self.slam4, (405, 170))
+            elif self.slam_cont == 5 or self.slam_cont == 6:
+                window.blit(self.slam5, (405, 170))
+            self.slam_counter += 1
+            if self.slam_counter == self.slam_animation_counter:
+                self.slam_counter = 0
+                self.slam_cont += 1
+
+    def desenha_facade(self, window, bool):
+        if bool:
+            if self.facade_cont == 1:
+                window.blit(self.facade1, (425, 190))
+            elif self.facade_cont == 2:
+                window.blit(self.facade2, (425, 190))
+            elif self.facade_cont == 3:
+                window.blit(self.facade3, (425, 190))
+            elif self.facade_cont == 4:
+                window.blit(self.facade4, (425, 190))
+            elif self.facade_cont == 5:
+                window.blit(self.facade5, (425, 190))
+            self.facade_counter += 1
+            if self.facade_counter == self.facade_animation_counter:
+                self.facade_counter = 0
+                self.facade_cont += 1
     def movimenta_leaf(self):
         self.leaf_counter += 1
         if self.leaf_counter == self.leaf_animation_counter:

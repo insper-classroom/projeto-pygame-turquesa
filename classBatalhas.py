@@ -21,11 +21,10 @@ class Batalha:
         tackle = {'dano': 35, 'precisao': 100, 'tipo': 'normal', 'pps': 20, 'nome': 'Tackle'}
         facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
         slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 5, 'nome': 'Slam'}
-        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps': 15, 'nome': 'Thunderbolt'}
+        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps': 5, 'nome': 'Thunderbolt'}
         cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'nome': 'Cut'}
         fury_cutter = {'dano': 10, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
-        metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 10, 'nome': 'Metal Claw'}
-        pursuit = {'dano': 60, 'precisao': 100, 'tipo': 'escuridao', 'pps': 20, 'nome': 'Pursuit'}
+        metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 5, 'nome': 'Metal Claw'}
         sludge_bomb = {'dano': 40, 'precisao': 100, 'tipo': 'veneno', 'pps': 10, 'nome': 'Sludge Bomb'}
         razor_leaf = {'dano': 40, 'precisao': 95, 'tipo': 'grama', 'pps': 15, 'nome': 'Razor Leaf'}
         earthquake = {'dano': 55, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'nome': 'Earthquake'}
@@ -42,11 +41,13 @@ class Batalha:
         self.efetivo = ''
         self.atacou = False
         self.fury_cutter = False
-        self.crit =False
+        self.crit = False
         self.sludge_bol = False
         self.thunder_bol = False
         self.tackle_bol = False
         self.cut_bol = False
+        self.slam_bol = False
+        self.facade_bol = False
         self.earthquake_bol = False
         self.earthquake_cont = 0
         self.leaf_bol = False
@@ -288,6 +289,12 @@ class Batalha:
                 self.tela_atual = 'animando'
             elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Razor Leaf':
                 self.leaf_bol = True
+                self.tela_atual = 'animando'
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Facade':
+                self.facade_bol = True
+                self.tela_atual = 'animando'
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Slam':
+                self.slam_bol = True
                 self.tela_atual = 'animando'
             else:
                 self.tela_atual = 'texto_batalha'

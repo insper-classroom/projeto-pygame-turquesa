@@ -398,6 +398,18 @@ class Jogo:
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                elif batalha.facade_bol == True:
+                    animacao.desenha_facade(self.windowt1, batalha.facade_bol)
+                    if animacao.facade_cont * 5 > 20:
+                        batalha.facade_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.facade_cont = 0
+                elif batalha.slam_bol == True:
+                    animacao.desenha_slam(self.windowt1, batalha.slam_bol)
+                    if animacao.slam_cont * 6 > 36:
+                        batalha.slam_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.slam_cont = 0
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
                 animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
@@ -430,6 +442,18 @@ class Jogo:
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                elif batalha.facade_bol == True:
+                    animacao.desenha_facade(self.windowt2, batalha.facade_bol)
+                    if animacao.facade_cont * 5 > 20:
+                        batalha.facade_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.facade_cont = 0
+                elif batalha.slam_bol == True:
+                    animacao.desenha_slam(self.windowt2, batalha.slam_bol)
+                    if animacao.slam_cont * 6 > 36:
+                        batalha.slam_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.slam_cont = 0
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
                 animacao.desenha_slude(self.windowt3, batalha.sludge_bol)
@@ -461,6 +485,18 @@ class Jogo:
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                elif batalha.facade_bol == True:
+                    animacao.desenha_facade(self.windowt3, batalha.facade_bol)
+                    if animacao.facade_cont * 5 > 20:
+                        batalha.facade_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.facade_cont = 0
+                elif batalha.slam_bol == True:
+                    animacao.desenha_slam(self.windowt3, batalha.slam_bol)
+                    if animacao.slam_cont * 6 > 36:
+                        batalha.slam_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.slam_cont = 0
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
                 animacao.desenha_slude(self.windowt4, batalha.sludge_bol)
@@ -492,6 +528,18 @@ class Jogo:
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                elif batalha.facade_bol == True:
+                    animacao.desenha_facade(self.windowt4, batalha.facade_bol)
+                    if animacao.facade_cont * 5 > 20:
+                        batalha.facade_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.facade_cont = 0
+                elif batalha.slam_bol == True:
+                    animacao.desenha_slam(self.windowt4, batalha.slam_bol)
+                    if animacao.slam_cont * 6 > 36:
+                        batalha.slam_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.slam_cont = 0
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
                 vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)
