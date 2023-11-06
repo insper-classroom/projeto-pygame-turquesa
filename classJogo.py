@@ -377,39 +377,78 @@ class Jogo:
                     animacao.slude_rect.x = 160
                     animacao.slude_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif animacao.thunder_rect_x >= 535:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.tackle_bol == True:
                     animacao.desenha_tackle(self.windowt1, batalha.tackle_bol)
                     if animacao.tackle_cont * 3 > 9:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.tackle_cont = 0
                 elif batalha.cut_bol == True:
                     animacao.desenha_cut(self.windowt1, batalha.cut_bol)
                     if animacao.cut_cont * 4 > 20:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.cut_cont = 0
                 elif animacao.leaf_rect.x > 439:
                     batalha.leaf_bol = False
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.facade_bol == True:
                     animacao.desenha_facade(self.windowt1, batalha.facade_bol)
                     if animacao.facade_cont * 5 > 20:
                         batalha.facade_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.facade_cont = 0
                 elif batalha.slam_bol == True:
                     animacao.desenha_slam(self.windowt1, batalha.slam_bol)
                     if animacao.slam_cont * 6 > 36:
                         batalha.slam_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.slam_cont = 0
+                elif batalha.metal_bol == True:
+                    animacao.desenha_metal(self.windowt1, batalha.metal_bol)
+                    if animacao.metal_cont * 5 > 20:
+                        batalha.metal_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
+                        animacao.metal_cont = 0
+                elif batalha.fcut_bol == True:
+                    dano = batalha.fcut
+                    if dano > 160:
+                        dano = 160
+                    animacao.desenha_fcut(self.windowt1, batalha.fcut_bol)
+                    if animacao.fcut_cont > 4 and dano == 20:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 8 and dano == 40:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 12 and dano == 80:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 16 and dano == 160:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
                 animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
@@ -420,40 +459,79 @@ class Jogo:
                     animacao.slude_rect.x = 160
                     animacao.slude_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif animacao.thunder_rect_x >= 535:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                     animacao.tackle_cont = 0
                 elif batalha.tackle_bol == True:
                     animacao.desenha_tackle(self.windowt2, batalha.tackle_bol)
                     if animacao.tackle_cont * 3 > 9:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.tackle_cont = 0
                 elif batalha.cut_bol == True:
                     animacao.desenha_cut(self.windowt2, batalha.cut_bol)
                     if animacao.cut_cont * 4 > 20:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.cut_cont = 0
                 elif animacao.leaf_rect.x > 439:
                     batalha.leaf_bol = False
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.facade_bol == True:
                     animacao.desenha_facade(self.windowt2, batalha.facade_bol)
                     if animacao.facade_cont * 5 > 20:
                         batalha.facade_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.facade_cont = 0
                 elif batalha.slam_bol == True:
                     animacao.desenha_slam(self.windowt2, batalha.slam_bol)
                     if animacao.slam_cont * 6 > 36:
                         batalha.slam_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.slam_cont = 0
+                elif batalha.metal_bol == True:
+                    animacao.desenha_metal(self.windowt2, batalha.metal_bol)
+                    if animacao.metal_cont * 5 > 20:
+                        batalha.metal_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
+                        animacao.metal_cont = 0
+                elif batalha.fcut_bol == True:
+                    dano = batalha.fcut
+                    if dano > 160:
+                        dano = 160
+                    animacao.desenha_fcut(self.windowt2, batalha.fcut_bol)
+                    if animacao.fcut_cont > 4 and dano == 20:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 8 and dano == 40:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 12 and dano == 80:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 16 and dano == 160:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
                 animacao.desenha_slude(self.windowt3, batalha.sludge_bol)
@@ -464,39 +542,78 @@ class Jogo:
                     animacao.slude_rect.x = 160
                     animacao.slude_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif animacao.thunder_rect_x >= 535:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.tackle_bol == True:
                     animacao.desenha_tackle(self.windowt3, batalha.tackle_bol)
                     if animacao.tackle_cont * 3 > 9:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.tackle_cont = 0
                 elif batalha.cut_bol == True:
                     animacao.desenha_cut(self.windowt3, batalha.cut_bol)
                     if animacao.cut_cont * 4 > 20:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.cut_cont = 0
                 elif animacao.leaf_rect.x > 439:
                     batalha.leaf_bol = False
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.facade_bol == True:
                     animacao.desenha_facade(self.windowt3, batalha.facade_bol)
                     if animacao.facade_cont * 5 > 20:
                         batalha.facade_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.facade_cont = 0
                 elif batalha.slam_bol == True:
                     animacao.desenha_slam(self.windowt3, batalha.slam_bol)
                     if animacao.slam_cont * 6 > 36:
                         batalha.slam_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.slam_cont = 0
+                elif batalha.metal_bol == True:
+                    animacao.desenha_metal(self.windowt3, batalha.metal_bol)
+                    if animacao.metal_cont * 5 > 20:
+                        batalha.metal_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
+                        animacao.metal_cont = 0
+                elif batalha.fcut_bol == True:
+                    dano = batalha.fcut
+                    if dano > 160:
+                        dano = 160
+                    animacao.desenha_fcut(self.windowt3, batalha.fcut_bol)
+                    if animacao.fcut_cont > 4 and dano == 20:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 8 and dano == 40:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 12 and dano == 80:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 16 and dano == 160:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
                 animacao.desenha_slude(self.windowt4, batalha.sludge_bol)
@@ -507,39 +624,78 @@ class Jogo:
                     animacao.slude_rect.x = 160
                     animacao.slude_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif animacao.thunder_rect_x >= 535:
                     batalha.thunder_bol = False
                     animacao.thunder_rect_x = 385
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.tackle_bol == True:
                     animacao.desenha_tackle(self.windowt4, batalha.tackle_bol)
                     if animacao.tackle_cont * 3 > 9:
                         batalha.tackle_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.tackle_cont = 0
                 elif batalha.cut_bol == True:
                     animacao.desenha_cut(self.windowt4, batalha.cut_bol)
                     if animacao.cut_cont * 4 > 20:
                         batalha.cut_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.cut_cont = 0
                 elif animacao.leaf_rect.x > 439:
                     batalha.leaf_bol = False
                     animacao.leaf_rect.x = 160
                     animacao.leaf_rect.y = 330
                     batalha.tela_atual = 'texto_batalha'
+                    batalha.fcut = 20
                 elif batalha.facade_bol == True:
                     animacao.desenha_facade(self.windowt4, batalha.facade_bol)
                     if animacao.facade_cont * 5 > 20:
                         batalha.facade_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.facade_cont = 0
                 elif batalha.slam_bol == True:
                     animacao.desenha_slam(self.windowt4, batalha.slam_bol)
-                    if animacao.slam_cont * 6 > 36:
+                    if animacao.slam_cont > 6:
                         batalha.slam_bol = False
                         batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
                         animacao.slam_cont = 0
+                elif batalha.metal_bol == True:
+                    animacao.desenha_metal(self.windowt4, batalha.metal_bol)
+                    if animacao.metal_cont * 5 > 20:
+                        batalha.metal_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        batalha.fcut = 20
+                        animacao.metal_cont = 0
+                elif batalha.fcut_bol == True:
+                    dano = batalha.fcut
+                    if dano > 160:
+                        dano = 160
+                    animacao.desenha_fcut(self.windowt4, batalha.fcut_bol)
+                    if animacao.fcut_cont > 4 and dano == 20:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 8 and dano == 40:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 12 and dano == 80:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
+                    elif animacao.fcut_cont > 16 and dano == 160:
+                        batalha.fcut_bol = False
+                        batalha.tela_atual = 'texto_batalha'
+                        animacao.fcut_cont = 0
+                        batalha.fcut *= 2
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
                 vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)
@@ -583,6 +739,7 @@ class Jogo:
                 self.treinador_4 = False
                 self.tela_gym_jogo = True
                 batalha.tela_atual = 'escolhendo'
+                batalha.fcut = 20
 
             pygame.display.update()
 

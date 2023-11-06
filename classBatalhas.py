@@ -20,18 +20,20 @@ class Batalha:
         ]
         tackle = {'dano': 35, 'precisao': 100, 'tipo': 'normal', 'pps': 20, 'nome': 'Tackle'}
         facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
+        facade2 = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
         slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 5, 'nome': 'Slam'}
         thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps': 5, 'nome': 'Thunderbolt'}
         cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'nome': 'Cut'}
-        fury_cutter = {'dano': 10, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
+        cut2 = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'nome': 'Cut'}
+        fury_cutter = {'dano': 20, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
         metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 5, 'nome': 'Metal Claw'}
         sludge_bomb = {'dano': 40, 'precisao': 100, 'tipo': 'veneno', 'pps': 10, 'nome': 'Sludge Bomb'}
         razor_leaf = {'dano': 40, 'precisao': 95, 'tipo': 'grama', 'pps': 15, 'nome': 'Razor Leaf'}
         earthquake = {'dano': 55, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'nome': 'Earthquake'}
         self.pokemons = [
             {'vida': 290, 'vida_max': 290, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'PIKACHU'},
-            {'vida': 250, 'vida_max': 250, 'ataques': [cut, fury_cutter, metal_claw, facade], 'nome': 'SCIZOR'},
-            {'vida': 330, 'vida_max': 330, 'ataques': [razor_leaf, sludge_bomb, earthquake, cut], 'nome': 'VENUSAUR'},
+            {'vida': 250, 'vida_max': 250, 'ataques': [cut, fury_cutter, metal_claw, facade2], 'nome': 'SCIZOR'},
+            {'vida': 330, 'vida_max': 330, 'ataques': [razor_leaf, sludge_bomb, earthquake, cut2], 'nome': 'VENUSAUR'},
         ]
         self.pokemonatual = 0
         self.botao = 1
@@ -51,6 +53,11 @@ class Batalha:
         self.earthquake_bol = False
         self.earthquake_cont = 0
         self.leaf_bol = False
+        self.metal_bol = False
+        self.mensagem = ''
+        self.algumacoisa = 0
+        self.fcut_bol = False
+        self.fcut = 20
     def desenha_batalha(self, window, dicionario):
         if self.tela_atual != 'animando':
             self.inimigo_atual = 0
@@ -165,11 +172,15 @@ class Batalha:
                             self.pokemonatual += 1
             #MORTE DOs POKEMONs DO JOGADOR
             if self.pokemons[0]["vida"] <= 0 and self.pokemons[1]["vida"] <= 0 and self.pokemons[2]["vida"] <= 0 and self.tela_atual != 'fim':
-                dicionario[self.inimigo_atual]['vida_pokemon'] = dicionario[self.inimigo_atual]['vida_max']
+                dicionario[0]['vida_pokemon'] = dicionario[0]['vida_max']
+                if len(dicionario) > 1:
+                    dicionario[1]['vida_pokemon'] = dicionario[1]['vida_max']
+                elif len(dicionario) > 2:
+                    dicionario[2]['vida_pokemon'] = dicionario[2]['vida_max']
                 self.tela_atual = 'fim'
                 self.inimigo_atual = 0
                 self.pokemonatual = 0
-                self.pokemons[1]['ataques'][1]['dano'] = 10
+                self.pokemons[1]['ataques'][1]['dano'] = 20
             #MUDA DE TELA QUANDO A LUTA ACABAR
             elif dicionario[self.inimigo_atual]['vida_pokemon'] <= 0:
                 self.tela_atual = 'vitória'
@@ -231,10 +242,8 @@ class Batalha:
             pygame.display.update()
             time.sleep(1)
             self.tela_atual = 'fim'
-            self.pokemons[1]['ataques'][2]['dano'] = 10
+            self.pokemons[1]['ataques'][1]['dano'] = 20
         self.inimigo_compara = dicionario[self.inimigo_atual]['vida_max']
-        self.efetivo = ''
-        self.crit = False
 
     def botoes_batalha(self, event, dicionario, window):
         #MOVE A SETA INDICANDO O ATAQUE SELECIONADO
@@ -296,8 +305,12 @@ class Batalha:
             elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Slam':
                 self.slam_bol = True
                 self.tela_atual = 'animando'
-            else:
-                self.tela_atual = 'texto_batalha'
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Metal Claw':
+                self.metal_bol = True
+                self.tela_atual = 'animando'
+            elif self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Fury Cutter':
+                self.fcut_bol = True
+                self.tela_atual = 'animando'
     def inimigo_ataca(self,dicionario):
         #LÓGICA DE BATALHA DOS INIMIGOS
         crit = False
@@ -421,16 +434,12 @@ class Batalha:
         self.crit = random.random()
         qual_ataque = self.pokemons[self.pokemonatual]['ataques'][ataque]
         dano = qual_ataque['dano']
-        if self.pokemons[self.pokemonatual]['ataques'][ataque]['nome'] == 'Fury Cutter':
-            if self.pokemons[self.pokemonatual]['ataques'][ataque]['dano'] < 160:
-                self.pokemons[self.pokemonatual]['ataques'][ataque]['dano'] *= 2
+        if qual_ataque['nome'] == 'Fury Cutter':
+            if self.pokemons[1]['ataques'][1]['dano'] < 160:
+                self.pokemons[1]['ataques'][1]['dano'] *= 2
         else:
-            self.pokemons[1]['ataques'][1]['dano'] = 10
-        if qual_ataque['tipo'] == 'escuridao':
-            if dicionario[self.inimigo_atual]['nome'] != 'MEDITITE' and dicionario[self.inimigo_atual]['nome'] != 'MEDICHAM':
-                dano //= 2
-                self.efetivo = 'not'
-        elif qual_ataque['tipo'] == 'grama':
+            self.pokemons[1]['ataques'][1]['dano'] = 20
+        if qual_ataque['tipo'] == 'grama':
             if dicionario[self.inimigo_atual]['nome'] == 'HERACROSS':
                 dano //= 2
                 self.efetivo = 'not'
@@ -442,9 +451,13 @@ class Batalha:
             if dicionario[self.inimigo_atual]['nome'] != 'MEDITITE' and dicionario[self.inimigo_atual]['nome'] != 'MEDICHAM':
                 dano //= 2
                 self.efetivo = 'not'
+        else:
+            self.efetivo = ''
         if self.crit <= 0.0416:
             dano *= 1.5
             self.crit = True
+        else:
+            self.crit = False
         dicionario[self.inimigo_atual]['vida_pokemon'] -= int(dano)
         self.pokemons[self.pokemonatual]['ataques'][ataque]['pps'] -= 1
 
