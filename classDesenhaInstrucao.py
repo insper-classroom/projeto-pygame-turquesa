@@ -7,7 +7,7 @@ class Instrucao():
     '''
     def __init__(self):
         self.img_fundo = pygame.transform.scale((pygame.image.load('img/instrucoes.png')),(640, 600))
-        self.rect_jogar = pygame.Rect(244, 573, 185, 25)
+        self.rect_jogar = pygame.Rect(530, 570, 105, 23)
     
     def desenha_inicio(self, window):
         '''
