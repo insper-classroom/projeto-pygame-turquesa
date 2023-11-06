@@ -206,20 +206,22 @@ class Jogo:
                     personagem_pc.velocidade[0] += -2
                 #Verifica click do mouse
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                    if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_pc:
                         batalha.pokemons[0]['vida'] = 290
                         batalha.pokemons[1]['vida'] = 250
                         batalha.pokemons[2]['vida'] = 330
-                    elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
-                        personagem_pc.rect.y = 410
-                    elif desenha_inicio.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        personagem_pc.rect.y = 285
+                    elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_pc:
+                        personagem_pc.rect.x = 305
+                        personagem_pc.rect.y = 285
+                    elif desenha_inicio.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_inicio:
                         self.tela_inicio = False
                         self.tela_instrucoes = True
-                    elif desenha_instrucao.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                    elif desenha_instrucao.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_instrucoes:
                         self.tela_instrucoes =  False
                         self.tela_ilha = True
-                    elif tela_hp.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                    elif tela_hp.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_hp:
                         self.tela_hp = False
                         self.tela_pc = True
 
@@ -740,7 +742,7 @@ class Jogo:
                 self.tela_gym_jogo = True
                 batalha.tela_atual = 'escolhendo'
                 batalha.fcut = 20
-
+                
             pygame.display.update()
 
 game = Jogo()
