@@ -29,7 +29,7 @@ class Batalha:
         metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 5, 'pps_max': 5, 'nome': 'Metal Claw'}
         sludge_bomb = {'dano': 40, 'precisao': 100, 'tipo': 'veneno', 'pps': 10, 'pps_max': 10, 'nome': 'Sludge Bomb'}
         razor_leaf = {'dano': 40, 'precisao': 95, 'tipo': 'grama', 'pps': 15, 'pps_max': 15, 'nome': 'Razor Leaf'}
-        earthquake = {'dano': 555, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'pps_max': 5, 'nome': 'Earthquake'}
+        earthquake = {'dano': 55, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'pps_max': 5, 'nome': 'Earthquake'}
         self.pokemons = [
             {'vida': 290, 'vida_max': 290, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'PIKACHU'},
             {'vida': 250, 'vida_max': 250, 'ataques': [cut, fury_cutter, metal_claw, facade2], 'nome': 'SCIZOR'},
