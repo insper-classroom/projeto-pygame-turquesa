@@ -213,6 +213,18 @@ class Jogo:
                     if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_pc:
                         batalha.pokemons[0]['vida'] = 290
                         batalha.pokemons[1]['vida'] = 250
+                        batalha.pokemons[0]['ataques'][0]['pps'] = batalha.pokemons[0]['ataques'][0]['pps_max']
+                        batalha.pokemons[0]['ataques'][1]['pps'] = batalha.pokemons[0]['ataques'][1]['pps_max']
+                        batalha.pokemons[0]['ataques'][2]['pps'] = batalha.pokemons[0]['ataques'][2]['pps_max']
+                        batalha.pokemons[0]['ataques'][3]['pps'] = batalha.pokemons[0]['ataques'][3]['pps_max']
+                        batalha.pokemons[1]['ataques'][0]['pps'] = batalha.pokemons[1]['ataques'][0]['pps_max']
+                        batalha.pokemons[1]['ataques'][1]['pps'] = batalha.pokemons[1]['ataques'][1]['pps_max']
+                        batalha.pokemons[1]['ataques'][2]['pps'] = batalha.pokemons[1]['ataques'][2]['pps_max']
+                        batalha.pokemons[1]['ataques'][3]['pps'] = batalha.pokemons[1]['ataques'][3]['pps_max']
+                        batalha.pokemons[2]['ataques'][0]['pps'] = batalha.pokemons[2]['ataques'][0]['pps_max']
+                        batalha.pokemons[2]['ataques'][1]['pps'] = batalha.pokemons[2]['ataques'][1]['pps_max']
+                        batalha.pokemons[2]['ataques'][2]['pps'] = batalha.pokemons[2]['ataques'][2]['pps_max']
+                        batalha.pokemons[2]['ataques'][3]['pps'] = batalha.pokemons[2]['ataques'][3]['pps_max']
                         batalha.pokemons[2]['vida'] = 330
                         personagem_pc.rect.x = 305
                         personagem_pc.rect.y = 285
@@ -372,7 +384,7 @@ class Jogo:
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
                 avisos.aviso_vida(self.window_gym, self.aviso_vida)
-                
+
             elif self.treinador_1:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
                 animacao.desenha_slude(self.windowt1, batalha.sludge_bol)
@@ -819,7 +831,7 @@ class Jogo:
                 #Desenhar as infos aqui
 
             #Alteração de tela no fim da batalha
-            if batalha.tela_atual == 'fim':
+            if batalha.tela_atual == 'fim' and batalha.tela_atual != 'animando':
                 if self.treinador_1 == True:
                     if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
                         self.bol_batalha1 = True

@@ -18,18 +18,18 @@ class Batalha:
             pygame.transform.scale((pygame.image.load('img/scizor.png')),(200,200)),
             pygame.transform.scale((pygame.image.load('img/venusaur.png')),(200,200)),
         ]
-        tackle = {'dano': 35, 'precisao': 100, 'tipo': 'normal', 'pps': 20, 'nome': 'Tackle'}
-        facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
-        facade2 = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'nome': 'Facade'}
-        slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 5, 'nome': 'Slam'}
-        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps': 5, 'nome': 'Thunderbolt'}
-        cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'nome': 'Cut'}
-        cut2 = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'nome': 'Cut'}
-        fury_cutter = {'dano': 20, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'nome': 'Fury Cutter'}
-        metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 5, 'nome': 'Metal Claw'}
-        sludge_bomb = {'dano': 40, 'precisao': 100, 'tipo': 'veneno', 'pps': 10, 'nome': 'Sludge Bomb'}
-        razor_leaf = {'dano': 40, 'precisao': 95, 'tipo': 'grama', 'pps': 15, 'nome': 'Razor Leaf'}
-        earthquake = {'dano': 55, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'nome': 'Earthquake'}
+        tackle = {'dano': 35, 'precisao': 100, 'tipo': 'normal', 'pps': 20, 'pps_max': 20, 'nome': 'Tackle'}
+        facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Facade'}
+        facade2 = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Facade'}
+        slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 5, 'pps_max': 5, 'nome': 'Slam'}
+        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps_max': 5, 'pps_max': 5, 'nome': 'Thunderbolt'}
+        cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Cut'}
+        cut2 = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Cut'}
+        fury_cutter = {'dano': 20, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'pps_max': 15, 'nome': 'Fury Cutter'}
+        metal_claw = {'dano': 50, 'precisao': 90, 'tipo': 'metal', 'pps': 5, 'pps_max': 5, 'nome': 'Metal Claw'}
+        sludge_bomb = {'dano': 40, 'precisao': 100, 'tipo': 'veneno', 'pps': 10, 'pps_max': 10, 'nome': 'Sludge Bomb'}
+        razor_leaf = {'dano': 40, 'precisao': 95, 'tipo': 'grama', 'pps': 15, 'pps_max': 15, 'nome': 'Razor Leaf'}
+        earthquake = {'dano': 555, 'precisao': 100, 'tipo': 'terra', 'pps': 5, 'pps_max': 5, 'nome': 'Earthquake'}
         self.pokemons = [
             {'vida': 290, 'vida_max': 290, 'ataques': [tackle, thunderbolt, slam, facade], 'nome': 'PIKACHU'},
             {'vida': 250, 'vida_max': 250, 'ataques': [cut, fury_cutter, metal_claw, facade2], 'nome': 'SCIZOR'},
@@ -76,6 +76,9 @@ class Batalha:
                 self.inimigo_atual += 1
             if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 2:
                 self.inimigo_atual += 1
+            if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and self.tela_atual != 'batalha' and self.tela_atual != 'texto_batalha':
+                self.tela_atual = 'fim'
+                self.pokemons[1]['ataques'][1]['dano'] = 20
         #EVITA VIDA NEGATIVA
         if dicionario[self.inimigo_atual]['vida_pokemon'] < 0:
             dicionario[self.inimigo_atual]['vida_pokemon'] = 0
@@ -99,10 +102,36 @@ class Batalha:
         blit_jogador = self.fonte.render(f'{self.pokemons[self.pokemonatual]["nome"]}: {self.pokemons[self.pokemonatual]["vida"]}/{self.pokemons[self.pokemonatual]["vida_max"]}', True, (0, 0, 0))
         window.blit(blit_jogador, (350, 310))
         #PARA DE DESENHAR O POKEMON INIMIGO SE ELE MORRER
-        if dicionario[self.inimigo_atual]['vida_pokemon'] >= 0 or self.tela_atual == 'animando' and self.earthquake_bol != True or self.iearthquake_bol != True:
+        if dicionario[self.inimigo_atual]['vida_pokemon'] >= 0 and self.earthquake_bol != True or self.iearthquake_bol != True or self.tela_atual == 'animando':
             window.blit(dicionario[self.inimigo_atual]['imagem'], (370, 130))
         #DESENHA O ATAQUE DO JOGADO
         if self.tela_atual == 'animando':
+            if self.earthquake_bol == True or self.iearthquake_bol == True:
+                movimento = random.randint(-15 , 15)
+                self.earthquake_cont += 1
+                if self.earthquake_cont == 45:
+                    if self.earthquake_bol == True and self.iearthquake_bol != True:
+                        self.tela_atual = 'texto_batalha'
+                        movimento = 0
+                    elif self.iearthquake_bol == True and self.earthquake_bol != True:
+                        self.tela_atual = 'inimigo'
+                        movimento = 0
+                    self.earthquake_bol = False
+                    self.iearthquake_bol = False
+                    self.earthquake_cont = 0
+                window.fill((188, 188, 188))
+                window.blit(self.lista_imagens[2], (40, 90))
+                window.blit(self.lista_imagens[2], (310, 290))
+                window.blit(self.lista_imagens[1], (0 + movimento, 400))
+                window.blit(self.lista_imagens[1], (290 + movimento, 230))
+                window.blit(self.lista_imagens[6 + self.pokemonatual], (30 + movimento, 300))
+                window.blit(dicionario[self.inimigo_atual]['imagem'], (370 + movimento, 130))
+                blit_inimigo = self.fonte.render(f'{dicionario[self.inimigo_atual]["nome"]}: {dicionario[self.inimigo_atual]["vida_pokemon"]}/{dicionario[self.inimigo_atual]["vida_max"]}', True, (0, 0, 0))
+                window.blit(blit_inimigo, (80, 115))
+                blit_jogador = self.fonte.render(f'{self.pokemons[self.pokemonatual]["nome"]}: {self.pokemons[self.pokemonatual]["vida"]}/{self.pokemons[self.pokemonatual]["vida_max"]}', True, (0, 0, 0))
+                window.blit(blit_jogador, (350, 310))
+                window.blit(self.lista_imagens[4], (0, 450))
+        if self.tela_atual == 'inimando':
             if self.earthquake_bol == True or self.iearthquake_bol == True:
                 movimento = random.randint(-15 , 15)
                 self.earthquake_cont += 1
@@ -204,6 +233,8 @@ class Batalha:
             self.botao = 1
         #TELA DE ESCOLHA DA BATALHA
         if self.tela_atual == 'escolhendo':
+            if self.botao != 1 and self.botao != 2:
+                self.botao = 1
             self.atacou = False
             window.blit(self.lista_imagens[4], (0, 450))
             text_menu = self.fonteMenu.render('FIGHT', True, (0, 0, 0))
@@ -222,10 +253,10 @@ class Batalha:
                 dicionario[1]['vida_pokemon'] = dicionario[1]['vida_max']
             elif len(dicionario) > 2:
                 dicionario[2]['vida_pokemon'] = dicionario[2]['vida_max']
-                self.tela_atual = 'fim'
-                self.inimigo_atual = 0
-                self.pokemonatual = 0
-                self.pokemons[1]['ataques'][1]['dano'] = 20
+            self.tela_atual = 'fim'
+            self.inimigo_atual = 0
+            self.pokemonatual = 0
+            self.pokemons[1]['ataques'][1]['dano'] = 20
         #ESCREVE OS ATAQUES DO JOGADOR
         elif self.tela_atual == 'batalha':
             window.blit(self.lista_imagens[0], (0, 450))
@@ -268,8 +299,7 @@ class Batalha:
             window.blit(morte, (50, 475))
             pygame.display.update()
             time.sleep(1)
-            self.tela_atual = 'fim'
-            self.pokemons[1]['ataques'][1]['dano'] = 20
+            self.tela_atual = 'escolhendo'
         self.inimigo_compara = dicionario[self.inimigo_atual]['vida_max']
 
     def botoes_batalha(self, event, dicionario, window):
