@@ -22,7 +22,7 @@ class Batalha:
         facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Facade'}
         facade2 = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Facade'}
         slam = {'dano': 55, 'precisao': 90, 'tipo': 'normal', 'pps': 5, 'pps_max': 5, 'nome': 'Slam'}
-        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps_max': 5, 'pps_max': 5, 'nome': 'Thunderbolt'}
+        thunderbolt = {'dano': 50, 'precisao': 100, 'tipo': 'eletrico', 'pps': 5, 'pps_max': 5, 'nome': 'Thunderbolt'}
         cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Cut'}
         cut2 = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'pps': 10, 'pps_max': 10, 'nome': 'Cut'}
         fury_cutter = {'dano': 20, 'precisao': 100, 'tipo': 'inseto', 'pps': 15, 'pps_max': 15, 'nome': 'Fury Cutter'}
