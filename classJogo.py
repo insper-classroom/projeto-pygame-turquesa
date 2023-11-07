@@ -13,6 +13,7 @@ from classDesenhaInstrucao import *
 from classFundoHp import *
 from classDesenhaAvisogym import *
 from classAnimacoes import *
+from classFinal import *
 
 class Jogo:
     def __init__(self):
@@ -34,6 +35,7 @@ class Jogo:
         self.windowt3 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowt4 = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         self.windowHP = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
+        self.tela_final = pygame.display.set_mode((640, 600), vsync= True, flags=pygame.SCALED)
         #Fonte:
         self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 15)
         #INFOS TELA INICIAL:    
@@ -60,8 +62,8 @@ class Jogo:
         self.bol_batalha4 = False
         #INFOS TELA hp:
         self.tela_hp = False
-        #BOLEANOS MUSICAS:
-
+        #infos tela final:
+        self.final = False
         self.inicial_tocando = False
         self.ilha_tocando = False
         self.batalha_tocando = False
@@ -70,6 +72,7 @@ class Jogo:
         self.musica_pc = False
         #BOLEANO AVISO:
         self.aviso_vida = False
+        self.contador = 0
 
     def iniciar_jogo(self):
         '''
@@ -104,6 +107,7 @@ class Jogo:
         tela_hp = Telahp()
         avisos = Avisos()
         animacao = Animacao()
+        gameover = GameOver()
 
         while self.rodando_jogo:
             
@@ -206,20 +210,22 @@ class Jogo:
                     personagem_pc.velocidade[0] += -2
                 #Verifica click do mouse
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                    if desenha_cura.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_pc:
                         batalha.pokemons[0]['vida'] = 290
                         batalha.pokemons[1]['vida'] = 250
                         batalha.pokemons[2]['vida'] = 330
-                    elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
                         personagem_pc.rect.x = 305
-                        personagem_pc.rect.y = 410
-                    elif desenha_inicio.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        personagem_pc.rect.y = 285
+                    elif desenha_cura.verifica_click_nao(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_pc:
+                        personagem_pc.rect.x = 305
+                        personagem_pc.rect.y = 285
+                    elif desenha_inicio.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_inicio:
                         self.tela_inicio = False
                         self.tela_instrucoes = True
-                    elif desenha_instrucao.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                    elif desenha_instrucao.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_instrucoes:
                         self.tela_instrucoes =  False
                         self.tela_ilha = True
-                    elif tela_hp.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                    elif tela_hp.verifica_click_sim(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) and self.tela_hp:
                         self.tela_hp = False
                         self.tela_pc = True
 
@@ -704,6 +710,9 @@ class Jogo:
                 self.windowHP.blit(vida_1, (173, 176))
                 self.windowHP.blit(vida_2, (511, 302))
                 self.windowHP.blit(vida_3, (189, 422))
+            
+            elif self.final:
+                gameover.desenha(self.tela_final)
                 
                 #Desenhar as infos aqui
 
@@ -713,24 +722,28 @@ class Jogo:
                     if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
                         self.bol_batalha1 = True
                         self.treinador_1 = False
+                        self.contador += 1
                     personagem.rect.x = 36
                     personagem.rect.y = 152
                 if self.treinador_2 == True:
                     if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
                         self.bol_batalha2 = True
                         self.treinador_2 = False
+                        self.contador += 1
                     personagem.rect.x = 430
                     personagem.rect.y = 454
                 if self.treinador_3 == True:
                     if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
                         self.bol_batalha3 = True
                         self.treinador_3 = False
+                        self.contador += 1
                     personagem.rect.x = 72
                     personagem.rect.y = 294
                 if self.treinador_4 == True:
                     if (batalha.pokemons[0]['vida'] > 0 or batalha.pokemons[1]['vida'] > 0 or batalha.pokemons[2]['vida'] > 0):
                         self.bol_batalha4 = True
                         self.treinador_4 = False
+                        self.contador += 1
                     personagem.rect.x = 486
                     personagem.rect.y = 132
                 self.treinador_1 = False
@@ -740,7 +753,10 @@ class Jogo:
                 self.tela_gym_jogo = True
                 batalha.tela_atual = 'escolhendo'
                 batalha.fcut = 20
-
+            if self.contador >= 4:
+                self.final = True
+                self.tela_gym_jogo = False
+    
             pygame.display.update()
 
 game = Jogo()
