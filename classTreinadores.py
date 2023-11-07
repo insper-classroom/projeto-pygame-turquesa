@@ -67,7 +67,7 @@ class Treinador4:
         self.cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'nome': 'Cut'}
         self.cross_chop = {'dano': 55, 'precisao': 100, 'tipo': 'lutador', 'nome': 'Cross Chop'}
         self.facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'nome': 'Facade'}
-        self.fire_blast = {'dano': 65, 'precisao': 100, 'tipo': 'fogo', 'nome': 'Fire Blast'}
+        self.fire_punch = {'dano': 65, 'precisao': 100, 'tipo': 'fogo', 'nome': 'Fire Punch'}
 
     def desenha_treinador4(self, window, bool):
         if not bool:
@@ -76,6 +76,6 @@ class Treinador4:
     def pokemons_treinador4(self):
         treinador4 = [{'vida_pokemon': 260, 'vida_max': 260, 'ataques': [self.karate_chop, self.earthquake], 'nome': 'HARIYAMA', 'imagem': self.hariyama},
                       {'vida_pokemon': 330, 'vida_max': 330, 'ataques': [self.megahorn, self.cut], 'nome': 'HERACROSS', 'imagem': self.heracross},
-                      {'vida_pokemon': 300, 'vida_max': 300, 'ataques': [self.fire_blast, self.cross_chop, self.facade], 'nome': 'MACHAMP', 'imagem': self.machamp}
+                      {'vida_pokemon': 300, 'vida_max': 300, 'ataques': [self.fire_punch, self.cross_chop, self.facade], 'nome': 'MACHAMP', 'imagem': self.machamp}
                       ]
         return treinador4

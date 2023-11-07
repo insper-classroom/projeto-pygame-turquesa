@@ -372,12 +372,15 @@ class Jogo:
                 personagem.altera_sprite_vertical()
                 personagem.altera_sprite_horizontal()
                 avisos.aviso_vida(self.window_gym, self.aviso_vida)
-
+                
             elif self.treinador_1:
                 batalha.desenha_batalha(self.windowt1,dicionario1)
                 animacao.desenha_slude(self.windowt1, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt1, batalha.thunder_bol)
                 animacao.desenha_leaf(self.windowt1, batalha.leaf_bol)
+                if batalha.tela_atual == 'animando' or batalha.tela_atual == 'inimando':
+                    animacao.desenha_chop(self.windowt1, batalha.ikarate_bol)
+                    animacao.desenha_beam(self.windowt1, batalha.ipsybeam_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -455,6 +458,30 @@ class Jogo:
                         batalha.tela_atual = 'texto_batalha'
                         animacao.fcut_cont = 0
                         batalha.fcut *= 2
+                elif batalha.fpunch == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_fpunch(self.windowt1, batalha.fpunch)
+                    if animacao.fpunch_cont > 5:
+                        batalha.fpunch = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.fpunch_cont = 0
+                elif batalha.recover == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_recover(self.windowt1, batalha.recover)
+                    if animacao.recover_cont > 6:
+                        batalha.recover = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.recover_cont = 0
+                elif animacao.chop_rect.x > 155:
+                    batalha.ikarate_bol = False
+                    animacao.chop_rect.x = 25
+                    animacao.chop_rect.y = 350
+                    batalha.tela_atual = 'inimigo'
+                elif animacao.beam_rect.x < 180:
+                    batalha.ipsybeam_bol = False
+                    animacao.beam_rect.x = 439
+                    animacao.beam_rect.y = 220
+                    batalha.tela_atual = 'inimigo'
             elif self.treinador_2:
                 batalha.desenha_batalha(self.windowt2, dicionario2)
                 animacao.desenha_slude(self.windowt2, batalha.sludge_bol)
@@ -538,11 +565,24 @@ class Jogo:
                         batalha.tela_atual = 'texto_batalha'
                         animacao.fcut_cont = 0
                         batalha.fcut *= 2
+                elif batalha.itackle_bol == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_itackle(self.windowt2, batalha.itackle_bol)
+                    if animacao.itackle_cont * 3 > 9:
+                        batalha.itackle_bol = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.itackle_cont = 0
+            
+            #ANIMAÇÕES DO TREINADOR 3
+
             elif self.treinador_3:
                 batalha.desenha_batalha(self.windowt3, dicionario3)
                 animacao.desenha_slude(self.windowt3, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt3, batalha.thunder_bol)
                 animacao.desenha_leaf(self.windowt3, batalha.leaf_bol)
+                if batalha.tela_atual == 'animando' or batalha.tela_atual == 'inimando':
+                    animacao.desenha_chop(self.windowt3, batalha.ikarate_bol)
+                    animacao.desenha_beam(self.windowt3, batalha.ipsybeam_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -620,11 +660,34 @@ class Jogo:
                         batalha.tela_atual = 'texto_batalha'
                         animacao.fcut_cont = 0
                         batalha.fcut *= 2
+                elif batalha.ifacade_bol == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_ifacade(self.windowt3, batalha.ifacade_bol)
+                    if animacao.ifacade_cont > 4:
+                        batalha.ifacade_bol = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.ifacade_cont = 0
+                elif animacao.chop_rect.x > 155:
+                    batalha.ikarate_bol = False
+                    animacao.chop_rect.x = 0
+                    animacao.chop_rect.y = 350
+                    batalha.tela_atual = 'inimigo'
+                elif animacao.beam_rect.x < 180:
+                    batalha.ipsybeam_bol = False
+                    animacao.beam_rect.x = 439
+                    animacao.beam_rect.y = 220
+                    batalha.tela_atual = 'inimigo'
+              #ANIMAÇOES DO TREINADOR 4
+
             elif self.treinador_4:
                 batalha.desenha_batalha(self.windowt4, dicionario4)
                 animacao.desenha_slude(self.windowt4, batalha.sludge_bol)
                 animacao.desenha_thunder(self.windowt4, batalha.thunder_bol)
                 animacao.desenha_leaf(self.windowt4, batalha.leaf_bol)
+                if batalha.tela_atual == 'animando' or batalha.tela_atual == 'inimando':
+                    animacao.desenha_chop(self.windowt4, batalha.ikarate_bol)
+                    animacao.desenha_dchop(self.windowt4, batalha.dchop_bol)
+                    animacao.desenha_horn(self.windowt4, batalha.horn_bol)
                 if animacao.slude_rect.x > 439:
                     batalha.sludge_bol = False
                     animacao.slude_rect.x = 160
@@ -702,6 +765,45 @@ class Jogo:
                         batalha.tela_atual = 'texto_batalha'
                         animacao.fcut_cont = 0
                         batalha.fcut *= 2
+                elif animacao.chop_rect.x > 155 and batalha.ikarate_bol == True:
+                    batalha.ikarate_bol = False
+                    animacao.chop_rect.x = 25
+                    animacao.chop_rect.y = 350
+                    batalha.tela_atual = 'inimigo'
+                elif batalha.icut_bol == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_icut(self.windowt4, batalha.icut_bol)
+                    if animacao.icut_cont > 4:
+                        batalha.icut_bol = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.icut_cont = 0
+                elif animacao.horn_rect.x < 80:
+                    batalha.horn_bol = False
+                    animacao.horn_rect.x = 340
+                    animacao.horn_rect.y = 120
+                    batalha.tela_atual = 'inimigo'
+                elif animacao.chop_rect.x > 155 and batalha.dchop_bol == True:
+                    batalha.dchop_bol = False
+                    animacao.chop_rect.x = 0
+                    animacao.chop_rect.y = 350
+                    animacao.dchop_rect.x = 175
+                    animacao.dchop_rect.y = 350
+                    batalha.tela_atual = 'inimigo'
+                elif batalha.fpunch == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_fpunch(self.windowt4, batalha.fpunch)
+                    if animacao.fpunch_cont > 5:
+                        batalha.fpunch = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.fpunch_cont = 0
+                elif batalha.ifacade_bol == True:
+                    batalha.tela_atual = 'animando'
+                    animacao.desenha_ifacade(self.windowt3, batalha.ifacade_bol)
+                    if animacao.ifacade_cont > 4:
+                        batalha.ifacade_bol = False
+                        batalha.tela_atual = 'inimigo'
+                        animacao.ifacade_cont = 0
+
             elif self.tela_hp:
                 tela_hp.desenha(self.windowHP)
                 vida_1 = self.fonte.render(str(batalha.pokemons[1]['vida']), True, BRANCO)
