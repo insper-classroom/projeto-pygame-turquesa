@@ -4,6 +4,9 @@ import random
 from classAnimacoes import *
 class Batalha:
     def __init__(self):
+        '''
+            Função que inicia todos os estados, condições, imagens, personagens e contadores da batalha.
+        '''
         self.fonte = pygame.font.Font('imgBatalhas/fontes.ttf', 20)
         self.fonteMenu = pygame.font.Font('imgBatalhas/fontes.ttf', 50)
         self.fonteBatalha = pygame.font.Font('imgBatalhas/fontes.ttf', 25)
@@ -71,6 +74,9 @@ class Batalha:
         self.enter_bol = False
         self.ataqueinimigo = []
     def desenha_batalha(self, window, dicionario):
+        '''
+            Função que desenha, atualiza, pausa e finaliza a batalha.
+        '''
         if self.tela_atual != 'animando':
             self.inimigo_atual = 0
             if dicionario[self.inimigo_atual]['vida_pokemon'] <= 0 and len(dicionario) > 1:
@@ -305,6 +311,9 @@ class Batalha:
         self.inimigo_compara = dicionario[self.inimigo_atual]['vida_max']
 
     def botoes_batalha(self, event, dicionario, window):
+        '''
+            Função que recebe os eventos e atualiza os estados da batalha.
+        '''
         #MOVE A SETA INDICANDO O ATAQUE SELECIONADO
         if event.type == pygame.KEYDOWN and self.botao == 1 and event.key == pygame.K_RIGHT:
             self.botao = 2
@@ -344,6 +353,9 @@ class Batalha:
             self.atacou == True
             self.iatacou = False
     def animacao_ataques(self, num):
+            '''
+                Função que atualiza o estado de qual ataque foi utilizado.
+            '''
             if self.pokemons[self.pokemonatual]['ataques'][num]['nome'] == 'Sludge Bomb':
                 self.sludge_bol = True
                 self.tela_atual = 'animando'
@@ -375,6 +387,9 @@ class Batalha:
                 self.fcut_bol = True
                 self.tela_atual = 'animando'
     def inimigo_ataca(self,dicionario):
+        '''
+            Função que comporta a lógica de batalha dos inimigos e atualiza o estado dos danos deles.
+        '''
         #LÓGICA DE BATALHA DOS INIMIGOS
         crit = False
         probab = random.random()
@@ -511,6 +526,9 @@ class Batalha:
         return int(dano), nome, efetivo, crit
     
     def jogador_ataca(self, dicionario, ataque):
+        '''
+            Função que desenha a imagem do mapa armazenada no init da classe.
+        '''
         #ALTERA O DANO DO ATAQUE SE ALGUMAS CONDIÇÕES FOREM VERDADEIRAS
         self.crit = random.random()
         qual_ataque = self.pokemons[self.pokemonatual]['ataques'][ataque]
