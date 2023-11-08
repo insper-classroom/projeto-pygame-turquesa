@@ -63,7 +63,7 @@ class Treinador4:
         self.hariyama = pygame.transform.scale((pygame.image.load('img/hariyama.png')),(150,150))
         self.karate_chop = {'dano': 45, 'precisao': 100, 'tipo': 'lutador', 'nome': 'Karate Chop'}
         self.earthquake = {'dano': 75, 'precisao': 100, 'tipo': 'terra', 'nome': 'Earthquake'}
-        self.megahorn = {'dano': 60, 'precisao': 100, 'tipo': 'inseto', 'nome': 'Megahorn'}
+        self.megahorn = {'dano': 70, 'precisao': 100, 'tipo': 'inseto', 'nome': 'Megahorn'}
         self.cut = {'dano': 45, 'precisao': 95, 'tipo': 'normal', 'nome': 'Cut'}
         self.cross_chop = {'dano': 55, 'precisao': 100, 'tipo': 'lutador', 'nome': 'Cross Chop'}
         self.facade = {'dano': 50, 'precisao': 100, 'tipo': 'normal', 'nome': 'Facade'}

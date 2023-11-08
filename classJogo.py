@@ -256,7 +256,7 @@ class Jogo:
                     elif self.treinador_4:
                         batalha.botoes_batalha(event, dicionario4, self.windowt4)
                 if batalha.tela_atual != 'animando' or batalha.tela_atual != 'texto_batalha':
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 1 and batalha.atacou == False:
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and batalha.botao == 1 and batalha.atacou == False and batalha.enter_bol == False:
                         batalha.tela_atual = 'batalha'
                         batalha.botao = 1
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and batalha.tela_atual == 'batalha':

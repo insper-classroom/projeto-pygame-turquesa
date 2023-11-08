@@ -68,6 +68,7 @@ class Batalha:
         self.icut_bol = False
         self.horn_bol = False
         self.dchop_bol = False
+        self.enter_bol = False
         self.ataqueinimigo = []
     def desenha_batalha(self, window, dicionario):
         if self.tela_atual != 'animando':
@@ -233,6 +234,7 @@ class Batalha:
             self.botao = 1
         #TELA DE ESCOLHA DA BATALHA
         if self.tela_atual == 'escolhendo':
+            self.enter_bol = False
             if self.botao != 1 and self.botao != 2:
                 self.botao = 1
             self.atacou = False
@@ -251,7 +253,7 @@ class Batalha:
             dicionario[0]['vida_pokemon'] = dicionario[0]['vida_max']
             if len(dicionario) > 1:
                 dicionario[1]['vida_pokemon'] = dicionario[1]['vida_max']
-            elif len(dicionario) > 2:
+            if len(dicionario) > 2:
                 dicionario[2]['vida_pokemon'] = dicionario[2]['vida_max']
             self.tela_atual = 'fim'
             self.inimigo_atual = 0
@@ -468,7 +470,7 @@ class Batalha:
                 dano //= 2
                 efetivo = 'not'
         elif dicionario[self.inimigo_atual]['nome'] == 'HERACROSS':
-            if probab < 0.5:
+            if probab < 0.75:
                 dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
                 nome = dicionario[self.inimigo_atual]['ataques'][0]['nome']
                 self.horn_bol = True
@@ -480,7 +482,11 @@ class Batalha:
                 dano //= 2
                 efetivo = 'not'
         elif dicionario[self.inimigo_atual]['nome'] == 'MACHAMP':
-            if probab < 0.45:   
+            if self.pokemons[self.pokemonatual]['nome'] == 'SCIZOR':
+                dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
+                nome = dicionario[self.inimigo_atual]['ataques'][0]['nome']
+                self.fpunch = True
+            elif probab < 0.45:   
                 dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
                 nome = dicionario[self.inimigo_atual]['ataques'][0]['nome']
                 self.fpunch = True
@@ -492,10 +498,6 @@ class Batalha:
                 dano = dicionario[self.inimigo_atual]['ataques'][2]['dano']
                 nome = dicionario[self.inimigo_atual]['ataques'][2]['nome']
                 self.ifacade_bol = True
-            if self.pokemons[self.pokemonatual]['nome'] == 'SCIZOR':
-                dano = dicionario[self.inimigo_atual]['ataques'][0]['dano']
-                nome = dicionario[self.inimigo_atual]['ataques'][0]['nome']
-                self.fpunch = True
             if self.pokemons[self.pokemonatual]['nome'] == 'SCIZOR' and nome == 'Fire Punch':
                 dano *= 4
                 efetivo = 'super'
@@ -537,5 +539,7 @@ class Batalha:
             self.crit = True
         else:
             self.crit = False
-        dicionario[self.inimigo_atual]['vida_pokemon'] -= int(dano)
-        self.pokemons[self.pokemonatual]['ataques'][ataque]['pps'] -= 1
+        if self.enter_bol == False:
+            dicionario[self.inimigo_atual]['vida_pokemon'] -= int(dano)
+            self.pokemons[self.pokemonatual]['ataques'][ataque]['pps'] -= 1
+            self.enter_bol = True
